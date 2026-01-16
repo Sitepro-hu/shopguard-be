@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const faqCategoryController = require("../controllers/faq-category.controller");
-const { verifyAdminToken, checkUserStatus } = require("../../user/middlewares/auth.middleware");
+const {
+  verifyAdminToken,
+  checkUserStatus,
+} = require("../../user/middlewares/auth.middleware");
 
 // Protected routes (admin only)
 router.post(

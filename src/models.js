@@ -1,7 +1,6 @@
 const File = require("./file/models/file.model");
 const PasswordResetRequest = require("./user/models/password-reset-request.model");
 const User = require("./user/models/user.model");
-const Subscriber = require("./subscriber/models/subscriber.model");
 const Contact = require("./contact/models/contact.model");
 const FAQ = require("./faq/models/faq.model");
 const Testimonial = require("./testimonial/models/testimonial.model");
@@ -34,7 +33,6 @@ module.exports = {
   User,
   PasswordResetRequest,
   File,
-  Subscriber,
   Contact,
   FAQ,
   Testimonial,
