@@ -1,0 +1,150 @@
+{
+  "errors": {
+    "USER": {
+      "NOT_FOUND": "Felhasználó nem található!",
+      "EMAIL_EXISTS": "Foglalt e-mail cím!",
+      "PASSWORD_MISMATCH": "Hiba! A régi jelszó nem egyezik!",
+      "CREATE_FAILED": "Sikertelen felhasználó létrehozás!",
+      "UPDATE_FAILED": "Sikertelen felhasználó frissítés!",
+      "DELETE_FAILED": "Sikertelen felhasználó törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!",
+      "PASSWORD_CHANGE_FAILED": "Sikertelen jelszó módosítás!"
+    },
+    "FAQ": {
+      "NOT_FOUND": "A kérdés nem található!",
+      "CREATE_FAILED": "Sikertelen GYIK létrehozás!",
+      "UPDATE_FAILED": "Sikertelen GYIK frissítés!",
+      "DELETE_FAILED": "Sikertelen GYIK törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "FAQ_CATEGORY": {
+      "NOT_FOUND": "Kategória nem található!",
+      "CREATE_FAILED": "Sikertelen GYIK kategória létrehozás!",
+      "UPDATE_FAILED": "Sikertelen GYIK kategória frissítés!",
+      "DELETE_FAILED": "Sikertelen GYIK kategória törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "SUBSCRIBER": {
+      "NOT_FOUND": "Feliratkozó nem található!",
+      "EMAIL_EXISTS": "Ez az email cím már feliratkozott!",
+      "CREATE_FAILED": "Sikertelen feliratkozás!",
+      "UPDATE_FAILED": "Sikertelen feliratkozó frissítés!",
+      "DELETE_FAILED": "Sikertelen feliratkozó törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "TESTIMONIAL": {
+      "NOT_FOUND": "Testimonial nem található!",
+      "CREATE_FAILED": "Sikertelen testimonial létrehozás!",
+      "UPDATE_FAILED": "Sikertelen testimonial frissítés!",
+      "DELETE_FAILED": "Sikertelen testimonial törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "CONTACT": {
+      "NOT_FOUND": "Kapcsolatfelvétel nem található!",
+      "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
+      "UPDATE_FAILED": "Sikertelen kapcsolatfelvétel frissítés!",
+      "DELETE_FAILED": "Sikertelen kapcsolatfelvétel törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "FILE": {
+      "NOT_FOUND": "Fájl nem található!",
+      "INVALID_FILE": "Érvénytelen fájl!",
+      "FILE_TOO_LARGE": "A fájl túl nagy!",
+      "INVALID_FILE_TYPE": "Nem támogatott fájltípus!",
+      "UPLOAD_FAILED": "Sikertelen fájl feltöltés!",
+      "UPDATE_FAILED": "Sikertelen fájl frissítés!",
+      "DELETE_FAILED": "Sikertelen fájl törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "EMAIL_VERIFICATION": {
+      "TOKEN_EXPIRED": "A verifikációs link lejárt!",
+      "TOKEN_INVALID": "Érvénytelen verifikációs token!",
+      "ALREADY_VERIFIED": "Az email cím már verifikálva van!",
+      "SEND_FAILED": "Sikertelen email küldés!"
+    },
+    "PASSWORD_RESET": {
+      "TOKEN_EXPIRED": "A jelszó visszaállítási link lejárt!",
+      "TOKEN_INVALID": "Érvénytelen jelszó visszaállítási token!",
+      "SUBMIT_FAILED": "Sikertelen jelszó visszaállítás!",
+      "REQUEST_FAILED": "Sikertelen jelszó visszaállítási kérés!"
+    },
+    "AUTH": {
+      "INVALID_CREDENTIALS": "Hibás e-mail cím vagy jelszó!",
+      "USER_NOT_FOUND": "Felhasználó nem található!",
+      "USER_INACTIVE": "A felhasználó inaktív!",
+      "EMAIL_NOT_VERIFIED": "Az email cím még nincs verifikálva!",
+      "INSUFFICIENT_PERMISSIONS": "Nincs jogosultságod!",
+      "JWT_EXPIRED": "Lejárt munkamenet!",
+      "JWT_MISSING": "Nincs jogosultságod!",
+      "REFRESH_TOKEN_EXPIRED": "Lejárt munkamenet, jelentkezz be újra!"
+    },
+    "GENERAL": {
+      "INTERNAL_ERROR": "Belső szerver hiba!",
+      "VALIDATION_ERROR": "Érvényesítési hiba!",
+      "NOT_FOUND": "Elem nem található!",
+      "UNAUTHORIZED": "Nincs jogosultságod!",
+      "FORBIDDEN": "Hozzáférés megtagadva!",
+      "BAD_REQUEST": "Hibás kérés!"
+    }
+  },
+  "success": {
+    "SUBSCRIBER": {
+      "CREATE_SUCCESS": "👍 Sikeres feliratkozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "USER": {
+      "CREATE_SUCCESS": "👍 Sikeres felhasználó létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!",
+      "PASSWORD_CHANGE_SUCCESS": "👍 Sikeres jelszó módosítás!",
+      "REGISTRATION_SUCCESS": "👍 Sikeres regisztráció! Ellenőrizd az email címedet a verifikációhoz!"
+    },
+    "FAQ": {
+      "CREATE_SUCCESS": "👍 Sikeres GYIK létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres GYIK frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres GYIK törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "FAQ_CATEGORY": {
+      "CREATE_SUCCESS": "👍 Sikeres GYIK kategória létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres GYIK kategória frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres GYIK kategória törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "TESTIMONIAL": {
+      "CREATE_SUCCESS": "👍 Sikeres testimonial létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres testimonial frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres testimonial törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "CONTACT": {
+      "CREATE_SUCCESS": "👍 Sikeres kapcsolatfelvétel!",
+      "UPDATE_SUCCESS": "👍 Sikeres kapcsolatfelvétel frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres kapcsolatfelvétel törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "FILE": {
+      "UPLOAD_SUCCESS": "👍 Sikeres fájl feltöltés!",
+      "UPDATE_SUCCESS": "👍 Sikeres fájl frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres fájl törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "AUTH": {
+      "LOGIN_SUCCESS": "👍 Sikeres bejelentkezés!",
+      "LOGOUT_SUCCESS": "👍 Sikeres kijelentkezés!",
+      "REGISTER_SUCCESS": "👍 Sikeres regisztráció!",
+      "REFRESH_SUCCESS": "👍 Sikeres token frissítés!"
+    },
+    "EMAIL_VERIFICATION": {
+      "SEND_SUCCESS": "👍 Sikeres email küldés!",
+      "VERIFY_SUCCESS": "👍 Sikeres email verifikáció!"
+    },
+    "PASSWORD_RESET": {
+      "REQUEST_SUCCESS": "👍 Sikeres jelszó visszaállítási kérés!",
+      "RESET_SUCCESS": "👍 Sikeres jelszó visszaállítás!"
+    }
+  }
+}
