@@ -9,6 +9,9 @@ const faqRoutes = require("./faq/routes/faq.routes");
 const faqCategoryRoutes = require("./faq/routes/faq-category.routes");
 const testimonialRoutes = require("./testimonial/routes/testimonial.routes");
 const heroSliderRoutes = require("./hero-slider/routes/hero-slider.routes");
+const productCategoryRoutes = require("./product-category/routes/product-category.routes");
+const productSubcategoryRoutes = require("./product-subcategory/routes/product-subcategory.routes");
+const productRoutes = require("./product/routes/product.routes");
 const router = express.Router();
 
 // Routes
@@ -21,6 +24,9 @@ router.use("/api/faq", faqRoutes);
 router.use("/api/faq-category", faqCategoryRoutes);
 router.use("/api/testimonial", testimonialRoutes);
 router.use("/api/hero-slider", heroSliderRoutes);
+router.use("/api/product-category", productCategoryRoutes);
+router.use("/api/product-subcategory", productSubcategoryRoutes);
+router.use("/api/product", productRoutes);
 
 
 module.exports = router;

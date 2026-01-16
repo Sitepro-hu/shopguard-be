@@ -46,6 +46,27 @@
       "DELETE_FAILED": "Sikertelen hero slider törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "PRODUCT_CATEGORY": {
+      "NOT_FOUND": "Termékkategória nem található!",
+      "CREATE_FAILED": "Sikertelen termékkategória létrehozás!",
+      "UPDATE_FAILED": "Sikertelen termékkategória frissítés!",
+      "DELETE_FAILED": "Sikertelen termékkategória törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "PRODUCT_SUBCATEGORY": {
+      "NOT_FOUND": "Termékalkategória nem található!",
+      "CREATE_FAILED": "Sikertelen termékalkategória létrehozás!",
+      "UPDATE_FAILED": "Sikertelen termékalkategória frissítés!",
+      "DELETE_FAILED": "Sikertelen termékalkategória törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "PRODUCT": {
+      "NOT_FOUND": "Termék nem található!",
+      "CREATE_FAILED": "Sikertelen termék létrehozás!",
+      "UPDATE_FAILED": "Sikertelen termék frissítés!",
+      "DELETE_FAILED": "Sikertelen termék törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -131,6 +152,24 @@
       "CREATE_SUCCESS": "👍 Sikeres hero slider létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres hero slider frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres hero slider törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "PRODUCT_CATEGORY": {
+      "CREATE_SUCCESS": "👍 Sikeres termékkategória létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres termékkategória frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres termékkategória törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "PRODUCT_SUBCATEGORY": {
+      "CREATE_SUCCESS": "👍 Sikeres termékalkategória létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres termékalkategória frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres termékalkategória törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "PRODUCT": {
+      "CREATE_SUCCESS": "👍 Sikeres termék létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres termék frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres termék törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {

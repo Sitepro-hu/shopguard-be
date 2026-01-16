@@ -124,6 +124,45 @@ const HeroSliderErrors = {
 };
 
 /**
+ * Product Category hibák
+ */
+const ProductCategoryErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PRODUCT_CATEGORY.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY.DELETE_FAILED, details),
+};
+
+/**
+ * Product Subcategory hibák
+ */
+const ProductSubcategoryErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PRODUCT_SUBCATEGORY.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_SUBCATEGORY.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_SUBCATEGORY.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_SUBCATEGORY.DELETE_FAILED, details),
+};
+
+/**
+ * Product hibák
+ */
+const ProductErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PRODUCT.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -230,6 +269,9 @@ module.exports = {
   SubscriberErrors,
   TestimonialErrors,
   HeroSliderErrors,
+  ProductCategoryErrors,
+  ProductSubcategoryErrors,
+  ProductErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,
