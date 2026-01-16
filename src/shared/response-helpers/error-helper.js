@@ -111,6 +111,19 @@ const TestimonialErrors = {
 };
 
 /**
+ * Hero Slider hibák
+ */
+const HeroSliderErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.HERO_SLIDER.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.HERO_SLIDER.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.HERO_SLIDER.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.HERO_SLIDER.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -216,6 +229,7 @@ module.exports = {
   FAQCategoryErrors,
   SubscriberErrors,
   TestimonialErrors,
+  HeroSliderErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

@@ -39,6 +39,13 @@
       "DELETE_FAILED": "Sikertelen testimonial törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "HERO_SLIDER": {
+      "NOT_FOUND": "Hero slider nem található!",
+      "CREATE_FAILED": "Sikertelen hero slider létrehozás!",
+      "UPDATE_FAILED": "Sikertelen hero slider frissítés!",
+      "DELETE_FAILED": "Sikertelen hero slider törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -118,6 +125,12 @@
       "CREATE_SUCCESS": "👍 Sikeres testimonial létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres testimonial frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres testimonial törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "HERO_SLIDER": {
+      "CREATE_SUCCESS": "👍 Sikeres hero slider létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres hero slider frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres hero slider törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {

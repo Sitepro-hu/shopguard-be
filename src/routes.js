@@ -8,6 +8,7 @@ const contactRoutes = require("./contact/routes/contact.routes");
 const faqRoutes = require("./faq/routes/faq.routes");
 const faqCategoryRoutes = require("./faq/routes/faq-category.routes");
 const testimonialRoutes = require("./testimonial/routes/testimonial.routes");
+const heroSliderRoutes = require("./hero-slider/routes/hero-slider.routes");
 const router = express.Router();
 
 // Routes
@@ -19,6 +20,7 @@ router.use("/api/contact", contactRoutes);
 router.use("/api/faq", faqRoutes);
 router.use("/api/faq-category", faqCategoryRoutes);
 router.use("/api/testimonial", testimonialRoutes);
+router.use("/api/hero-slider", heroSliderRoutes);
 
 
 module.exports = router;

@@ -5,6 +5,7 @@ const Contact = require("./contact/models/contact.model");
 const FAQ = require("./faq/models/faq.model");
 const Testimonial = require("./testimonial/models/testimonial.model");
 const FaqCategory = require("./faq/models/faq-category.model");
+const HeroSlider = require("./hero-slider/models/hero-slider.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -37,4 +38,5 @@ module.exports = {
   FAQ,
   Testimonial,
   FaqCategory,
+  HeroSlider,
 };
