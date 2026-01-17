@@ -17,6 +17,7 @@ const mediaRoutes = require("./media/routes/media.routes");
 const partnerRoutes = require("./partner/routes/partner.routes");
 const downloadableItemRoutes = require("./downloadable-item/routes/downloadable-item.routes");
 const downloadableCategoryRoutes = require("./downloadable-item/routes/downloadable-category.routes");
+const internationalContactRoutes = require("./international-contact/routes/international-contact.routes");
 const router = express.Router();
 
 // Routes
@@ -37,6 +38,7 @@ router.use("/api/media", mediaRoutes);
 router.use("/api/partner", partnerRoutes);
 router.use("/api/downloadable-item", downloadableItemRoutes);
 router.use("/api/downloadable-category", downloadableCategoryRoutes);
+router.use("/api/international-contact", internationalContactRoutes);
 
 
 module.exports = router;

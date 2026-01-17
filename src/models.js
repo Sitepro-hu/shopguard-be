@@ -19,6 +19,7 @@ const Media = require("./media/models/media.model");
 const Partner = require("./partner/models/partner.model");
 const DownloadableItem = require("./downloadable-item/models/downloadable-item.model");
 const DownloadableCategory = require("./downloadable-item/models/downloadable-category.model");
+const InternationalContact = require("./international-contact/models/international-contact.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -145,6 +146,8 @@ DownloadableCategory.hasMany(DownloadableItem, {
   onDelete: "SET NULL",
 });
 
+// InternationalContact model (no associations needed)
+
 module.exports = {
   User,
   PasswordResetRequest,
@@ -167,4 +170,5 @@ module.exports = {
   Partner,
   DownloadableItem,
   DownloadableCategory,
+  InternationalContact,
 };

@@ -228,6 +228,19 @@ const DownloadableCategoryErrors = {
 };
 
 /**
+ * InternationalContact hibák
+ */
+const InternationalContactErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.INTERNATIONAL_CONTACT.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.INTERNATIONAL_CONTACT.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.INTERNATIONAL_CONTACT.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.INTERNATIONAL_CONTACT.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -342,6 +355,7 @@ module.exports = {
   PartnerErrors,
   DownloadableItemErrors,
   DownloadableCategoryErrors,
+  InternationalContactErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

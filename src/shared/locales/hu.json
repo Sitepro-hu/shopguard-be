@@ -102,6 +102,13 @@
       "DELETE_FAILED": "Sikertelen letölthető kategória törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "INTERNATIONAL_CONTACT": {
+      "NOT_FOUND": "Nemzetközi kapcsolat nem található!",
+      "CREATE_FAILED": "Sikertelen nemzetközi kapcsolat létrehozás!",
+      "UPDATE_FAILED": "Sikertelen nemzetközi kapcsolat frissítés!",
+      "DELETE_FAILED": "Sikertelen nemzetközi kapcsolat törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -235,6 +242,12 @@
       "CREATE_SUCCESS": "👍 Sikeres letölthető kategória létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres letölthető kategória frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres letölthető kategória törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "INTERNATIONAL_CONTACT": {
+      "CREATE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {
