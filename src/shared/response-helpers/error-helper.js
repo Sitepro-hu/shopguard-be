@@ -202,6 +202,32 @@ const PartnerErrors = {
 };
 
 /**
+ * DownloadableItem hibák
+ */
+const DownloadableItemErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.DOWNLOADABLE_ITEM.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_ITEM.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_ITEM.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_ITEM.DELETE_FAILED, details),
+};
+
+/**
+ * DownloadableCategory hibák
+ */
+const DownloadableCategoryErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.DOWNLOADABLE_CATEGORY.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_CATEGORY.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_CATEGORY.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.DOWNLOADABLE_CATEGORY.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -314,6 +340,8 @@ module.exports = {
   ReferenceErrors,
   MediaErrors,
   PartnerErrors,
+  DownloadableItemErrors,
+  DownloadableCategoryErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

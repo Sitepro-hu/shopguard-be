@@ -17,6 +17,8 @@ const ReferenceResult = require("./reference/models/reference-result.model");
 const ReferenceTestimonial = require("./reference/models/reference-testimonial.model");
 const Media = require("./media/models/media.model");
 const Partner = require("./partner/models/partner.model");
+const DownloadableItem = require("./downloadable-item/models/downloadable-item.model");
+const DownloadableCategory = require("./downloadable-item/models/downloadable-category.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -131,6 +133,18 @@ Reference.hasMany(ReferenceTestimonial, {
 
 // Partner model (no associations needed)
 
+// DownloadableCategory - DownloadableItem associations
+DownloadableItem.belongsTo(DownloadableCategory, {
+  as: "category",
+  foreignKey: "downloadableCategoryId",
+  onDelete: "SET NULL",
+});
+DownloadableCategory.hasMany(DownloadableItem, {
+  foreignKey: "downloadableCategoryId",
+  as: "items",
+  onDelete: "SET NULL",
+});
+
 module.exports = {
   User,
   PasswordResetRequest,
@@ -151,4 +165,6 @@ module.exports = {
   ReferenceTestimonial,
   Media,
   Partner,
+  DownloadableItem,
+  DownloadableCategory,
 };

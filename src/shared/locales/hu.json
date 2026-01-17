@@ -88,6 +88,20 @@
       "DELETE_FAILED": "Sikertelen partner törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "DOWNLOADABLE_ITEM": {
+      "NOT_FOUND": "Letölthető elem nem található!",
+      "CREATE_FAILED": "Sikertelen letölthető elem létrehozás!",
+      "UPDATE_FAILED": "Sikertelen letölthető elem frissítés!",
+      "DELETE_FAILED": "Sikertelen letölthető elem törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
+    "DOWNLOADABLE_CATEGORY": {
+      "NOT_FOUND": "Letölthető kategória nem található!",
+      "CREATE_FAILED": "Sikertelen letölthető kategória létrehozás!",
+      "UPDATE_FAILED": "Sikertelen letölthető kategória frissítés!",
+      "DELETE_FAILED": "Sikertelen letölthető kategória törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -209,6 +223,18 @@
       "CREATE_SUCCESS": "👍 Sikeres partner létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres partner frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres partner törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "DOWNLOADABLE_ITEM": {
+      "CREATE_SUCCESS": "👍 Sikeres letölthető elem létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres letölthető elem frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres letölthető elem törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "DOWNLOADABLE_CATEGORY": {
+      "CREATE_SUCCESS": "👍 Sikeres letölthető kategória létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres letölthető kategória frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres letölthető kategória törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {

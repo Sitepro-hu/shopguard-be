@@ -15,6 +15,8 @@ const productRoutes = require("./product/routes/product.routes");
 const referenceRoutes = require("./reference/routes/reference.routes");
 const mediaRoutes = require("./media/routes/media.routes");
 const partnerRoutes = require("./partner/routes/partner.routes");
+const downloadableItemRoutes = require("./downloadable-item/routes/downloadable-item.routes");
+const downloadableCategoryRoutes = require("./downloadable-item/routes/downloadable-category.routes");
 const router = express.Router();
 
 // Routes
@@ -33,6 +35,8 @@ router.use("/api/product", productRoutes);
 router.use("/api/reference", referenceRoutes);
 router.use("/api/media", mediaRoutes);
 router.use("/api/partner", partnerRoutes);
+router.use("/api/downloadable-item", downloadableItemRoutes);
+router.use("/api/downloadable-category", downloadableCategoryRoutes);
 
 
 module.exports = router;
