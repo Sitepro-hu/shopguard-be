@@ -176,6 +176,19 @@ const ReferenceErrors = {
 };
 
 /**
+ * Media hibák
+ */
+const MediaErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.MEDIA.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.MEDIA.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.MEDIA.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.MEDIA.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -286,6 +299,7 @@ module.exports = {
   ProductSubcategoryErrors,
   ProductErrors,
   ReferenceErrors,
+  MediaErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,
