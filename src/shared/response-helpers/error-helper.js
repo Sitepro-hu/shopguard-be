@@ -189,6 +189,19 @@ const MediaErrors = {
 };
 
 /**
+ * Partner hibák
+ */
+const PartnerErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PARTNER.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PARTNER.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PARTNER.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PARTNER.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -300,6 +313,7 @@ module.exports = {
   ProductErrors,
   ReferenceErrors,
   MediaErrors,
+  PartnerErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

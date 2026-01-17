@@ -81,6 +81,13 @@
       "DELETE_FAILED": "Sikertelen média törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "PARTNER": {
+      "NOT_FOUND": "Partner nem található!",
+      "CREATE_FAILED": "Sikertelen partner létrehozás!",
+      "UPDATE_FAILED": "Sikertelen partner frissítés!",
+      "DELETE_FAILED": "Sikertelen partner törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -196,6 +203,12 @@
       "CREATE_SUCCESS": "👍 Sikeres média létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres média frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres média törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "PARTNER": {
+      "CREATE_SUCCESS": "👍 Sikeres partner létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres partner frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres partner törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {

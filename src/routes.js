@@ -14,6 +14,7 @@ const productSubcategoryRoutes = require("./product-subcategory/routes/product-s
 const productRoutes = require("./product/routes/product.routes");
 const referenceRoutes = require("./reference/routes/reference.routes");
 const mediaRoutes = require("./media/routes/media.routes");
+const partnerRoutes = require("./partner/routes/partner.routes");
 const router = express.Router();
 
 // Routes
@@ -31,6 +32,7 @@ router.use("/api/product-subcategory", productSubcategoryRoutes);
 router.use("/api/product", productRoutes);
 router.use("/api/reference", referenceRoutes);
 router.use("/api/media", mediaRoutes);
+router.use("/api/partner", partnerRoutes);
 
 
 module.exports = router;

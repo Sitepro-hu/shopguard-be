@@ -16,6 +16,7 @@ const Country = require("./reference/models/country.model");
 const ReferenceResult = require("./reference/models/reference-result.model");
 const ReferenceTestimonial = require("./reference/models/reference-testimonial.model");
 const Media = require("./media/models/media.model");
+const Partner = require("./partner/models/partner.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -128,6 +129,8 @@ Reference.hasMany(ReferenceTestimonial, {
 
 // Media model (no associations needed)
 
+// Partner model (no associations needed)
+
 module.exports = {
   User,
   PasswordResetRequest,
@@ -147,4 +150,5 @@ module.exports = {
   ReferenceResult,
   ReferenceTestimonial,
   Media,
+  Partner,
 };
