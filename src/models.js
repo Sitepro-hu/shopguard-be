@@ -11,6 +11,10 @@ const ProductSubcategory = require("./product-subcategory/models/product-subcate
 const Product = require("./product/models/product.model");
 const ProductGallery = require("./product/models/product-gallery.model");
 const ProductDownloadable = require("./product/models/product-downloadable.model");
+const Reference = require("./reference/models/reference.model");
+const Country = require("./reference/models/country.model");
+const ReferenceResult = require("./reference/models/reference-result.model");
+const ReferenceTestimonial = require("./reference/models/reference-testimonial.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -83,6 +87,44 @@ Product.hasMany(ProductDownloadable, {
   onDelete: "CASCADE",
 });
 
+// Reference - Country associations (many-to-many)
+Reference.belongsToMany(Country, {
+  through: "ReferenceCountries",
+  as: "countries",
+  foreignKey: "referenceId",
+  otherKey: "countryId",
+});
+Country.belongsToMany(Reference, {
+  through: "ReferenceCountries",
+  as: "references",
+  foreignKey: "countryId",
+  otherKey: "referenceId",
+});
+
+// Reference - ReferenceResult associations
+ReferenceResult.belongsTo(Reference, {
+  as: "reference",
+  foreignKey: "referenceId",
+  onDelete: "CASCADE",
+});
+Reference.hasMany(ReferenceResult, {
+  foreignKey: "referenceId",
+  as: "results",
+  onDelete: "CASCADE",
+});
+
+// Reference - ReferenceTestimonial associations
+ReferenceTestimonial.belongsTo(Reference, {
+  as: "reference",
+  foreignKey: "referenceId",
+  onDelete: "CASCADE",
+});
+Reference.hasMany(ReferenceTestimonial, {
+  foreignKey: "referenceId",
+  as: "testimonials",
+  onDelete: "CASCADE",
+});
+
 module.exports = {
   User,
   PasswordResetRequest,
@@ -97,4 +139,8 @@ module.exports = {
   Product,
   ProductGallery,
   ProductDownloadable,
+  Reference,
+  Country,
+  ReferenceResult,
+  ReferenceTestimonial,
 };

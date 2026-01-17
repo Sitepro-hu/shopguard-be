@@ -163,6 +163,19 @@ const ProductErrors = {
 };
 
 /**
+ * Reference hibák
+ */
+const ReferenceErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.REFERENCE.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.REFERENCE.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.REFERENCE.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.REFERENCE.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -272,6 +285,7 @@ module.exports = {
   ProductCategoryErrors,
   ProductSubcategoryErrors,
   ProductErrors,
+  ReferenceErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

@@ -67,6 +67,13 @@
       "DELETE_FAILED": "Sikertelen termék törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "REFERENCE": {
+      "NOT_FOUND": "Referencia nem található!",
+      "CREATE_FAILED": "Sikertelen referencia létrehozás!",
+      "UPDATE_FAILED": "Sikertelen referencia frissítés!",
+      "DELETE_FAILED": "Sikertelen referencia törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -170,6 +177,12 @@
       "CREATE_SUCCESS": "👍 Sikeres termék létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres termék frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres termék törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "REFERENCE": {
+      "CREATE_SUCCESS": "👍 Sikeres referencia létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres referencia frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres referencia törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {
