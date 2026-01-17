@@ -106,6 +106,13 @@ class ProductSubcategoryService {
               required: false,
               order: [["displayOrder", "ASC"]],
             },
+            {
+              model: require("../../media/models/media.model"),
+              as: "media",
+              required: false,
+              where: { status: "PUBLISHED" },
+              through: { attributes: [] },
+            },
           ],
         },
       ],

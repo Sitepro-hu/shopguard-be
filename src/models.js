@@ -130,7 +130,63 @@ Reference.hasMany(ReferenceTestimonial, {
   onDelete: "CASCADE",
 });
 
-// Media model (no associations needed)
+// Product - Reference associations (many-to-many)
+Product.belongsToMany(Reference, {
+  through: "ProductReferences",
+  as: "references",
+  foreignKey: "productId",
+  otherKey: "referenceId",
+});
+Reference.belongsToMany(Product, {
+  through: "ProductReferences",
+  as: "products",
+  foreignKey: "referenceId",
+  otherKey: "productId",
+});
+
+// Product - Media associations (many-to-many)
+Product.belongsToMany(Media, {
+  through: "ProductMedia",
+  as: "media",
+  foreignKey: "productId",
+  otherKey: "mediaId",
+});
+Media.belongsToMany(Product, {
+  through: "ProductMedia",
+  as: "products",
+  foreignKey: "mediaId",
+  otherKey: "productId",
+});
+
+// Reference - Media associations (many-to-many)
+Reference.belongsToMany(Media, {
+  through: "ReferenceMedia",
+  as: "media",
+  foreignKey: "referenceId",
+  otherKey: "mediaId",
+});
+Media.belongsToMany(Reference, {
+  through: "ReferenceMedia",
+  as: "references",
+  foreignKey: "mediaId",
+  otherKey: "referenceId",
+});
+
+// Media - Media self-referential associations (related media)
+Media.belongsToMany(Media, {
+  through: "RelatedMedia",
+  as: "relatedMedia",
+  foreignKey: "mediaId",
+  otherKey: "relatedMediaId",
+});
+
+// Reference - Reference self-referential associations (related references)
+Reference.belongsToMany(Reference, {
+  through: "RelatedReferences",
+  as: "relatedReferences",
+  foreignKey: "referenceId",
+  otherKey: "relatedReferenceId",
+});
 
 // Partner model (no associations needed)
 

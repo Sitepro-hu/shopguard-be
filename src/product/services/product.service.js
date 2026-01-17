@@ -3,6 +3,11 @@ const ProductGallery = require("../models/product-gallery.model");
 const ProductDownloadable = require("../models/product-downloadable.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
 const ProductCategory = require("../../product-category/models/product-category.model");
+const Reference = require("../../reference/models/reference.model");
+const Country = require("../../reference/models/country.model");
+const ReferenceResult = require("../../reference/models/reference-result.model");
+const ReferenceTestimonial = require("../../reference/models/reference-testimonial.model");
+const Media = require("../../media/models/media.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const { ProductErrors } = require("../../shared/response-helpers/error-helper");
 const getAdjacentElements = require("../../shared/database-helpers/adjacent-element.helper");
@@ -17,8 +22,8 @@ class ProductService {
       productData.slug = await customSlugify(Product, productData.title, null);
     }
 
-    // Külön kezeljük a gallery és downloadable adatokat
-    const { gallery, downloadables, ...productFields } = productData;
+    // Külön kezeljük a gallery, downloadable, references és media adatokat
+    const { gallery, downloadables, references, media, ...productFields } = productData;
 
     const product = await Product.create(productFields);
 
@@ -40,11 +45,21 @@ class ProductService {
       await ProductDownloadable.bulkCreate(downloadableItems);
     }
 
+    // Ha van references, hozzáadjuk (many-to-many)
+    if (references && Array.isArray(references) && references.length > 0) {
+      await product.setReferences(references);
+    }
+
+    // Ha van media, hozzáadjuk (many-to-many)
+    if (media && Array.isArray(media) && media.length > 0) {
+      await product.setMedia(media);
+    }
+
     return await this.getProductById(product.id);
   }
 
   async getAllProducts() {
-    return await Product.findAll({
+    const products = await Product.findAll({
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -59,7 +74,35 @@ class ProductService {
           required: false,
           order: [["displayOrder", "ASC"]],
         },
+        {
+          model: Reference,
+          as: "references",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
+    });
+
+    // Admin esetén csak a referenceId-kat és mediaId-kat adjuk vissza tömbben
+    return products.map((product) => {
+      const productJson = product.toJSON();
+      productJson.referenceIds = productJson.references
+        ? productJson.references.map((ref) => ref.id)
+        : [];
+      productJson.mediaIds = productJson.media
+        ? productJson.media.map((m) => m.id)
+        : [];
+      delete productJson.references;
+      delete productJson.media;
+      return productJson;
     });
   }
 
@@ -91,12 +134,37 @@ class ProductService {
             },
           ],
         },
+        {
+          model: Reference,
+          as: "references",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
 
     if (!product) {
       return null;
     }
+
+    // Admin esetén csak a referenceId-kat és mediaId-kat adjuk vissza tömbben
+    const productJson = product.toJSON();
+    productJson.referenceIds = productJson.references
+      ? productJson.references.map((ref) => ref.id)
+      : [];
+    productJson.mediaIds = productJson.media
+      ? productJson.media.map((m) => m.id)
+      : [];
+    delete productJson.references;
+    delete productJson.media;
 
     if (includeAdjacent) {
       try {
@@ -107,17 +175,17 @@ class ProductService {
         });
 
         return {
-          ...product.toJSON(),
+          ...productJson,
           previousElementId: adjacentElements.previousElementId,
           nextElementId: adjacentElements.nextElementId,
         };
       } catch (error) {
         // Ha hiba van az adjacent element lekérdezésben, csak a product-t adjuk vissza
-        return product;
+        return productJson;
       }
     }
 
-    return product;
+    return productJson;
   }
 
   async getProductBySlug(slug) {
@@ -151,6 +219,40 @@ class ProductService {
             },
           ],
         },
+        {
+          model: Reference,
+          as: "references",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+          include: [
+            {
+              model: Country,
+              as: "countries",
+              required: false,
+              through: { attributes: [] },
+            },
+            {
+              model: ReferenceResult,
+              as: "results",
+              required: false,
+              order: [["displayOrder", "ASC"]],
+            },
+            {
+              model: ReferenceTestimonial,
+              as: "testimonials",
+              required: false,
+              order: [["displayOrder", "ASC"]],
+            },
+          ],
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+        },
       ],
     });
 
@@ -174,8 +276,8 @@ class ProductService {
       productData.slug = await customSlugify(Product, productData.title, id);
     }
 
-    // Külön kezeljük a gallery és downloadable adatokat
-    const { gallery, downloadables, ...productFields } = productData;
+    // Külön kezeljük a gallery, downloadable, references és media adatokat
+    const { gallery, downloadables, references, media, ...productFields } = productData;
 
     await product.update(productFields);
 
@@ -200,6 +302,24 @@ class ProductService {
           productId: id,
         }));
         await ProductDownloadable.bulkCreate(downloadableItems);
+      }
+    }
+
+    // Ha van references, frissítjük (many-to-many)
+    if (references !== undefined) {
+      if (Array.isArray(references) && references.length > 0) {
+        await product.setReferences(references);
+      } else {
+        await product.setReferences([]);
+      }
+    }
+
+    // Ha van media, frissítjük (many-to-many)
+    if (media !== undefined) {
+      if (Array.isArray(media) && media.length > 0) {
+        await product.setMedia(media);
+      } else {
+        await product.setMedia([]);
       }
     }
 
@@ -238,8 +358,27 @@ class ProductService {
           as: "downloadables",
           required: false,
         },
+        {
+          model: Reference,
+          as: "references",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
+
+    // Admin esetén csak a referenceId-kat adjuk vissza tömbben
+    if (result.data) {
+      result.data = result.data.map((product) => {
+        const productJson = product.toJSON ? product.toJSON() : product;
+        productJson.referenceIds = productJson.references
+          ? productJson.references.map((ref) => ref.id)
+          : [];
+        delete productJson.references;
+        return productJson;
+      });
+    }
 
     return result;
   }
@@ -262,10 +401,36 @@ class ProductService {
           as: "downloadables",
           required: false,
         },
+        {
+          model: Reference,
+          as: "references",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
 
-    return updatedProducts;
+    // Admin esetén csak a referenceId-kat és mediaId-kat adjuk vissza tömbben
+    return updatedProducts.map((product) => {
+      const productJson = product.toJSON();
+      productJson.referenceIds = productJson.references
+        ? productJson.references.map((ref) => ref.id)
+        : [];
+      productJson.mediaIds = productJson.media
+        ? productJson.media.map((m) => m.id)
+        : [];
+      delete productJson.references;
+      delete productJson.media;
+      return productJson;
+    });
   }
 }
 

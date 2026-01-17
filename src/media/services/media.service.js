@@ -17,13 +17,41 @@ class MediaService {
       );
     }
 
-    const media = await Media.create(mediaData);
+    // Külön kezeljük a relatedMedia adatokat
+    const { relatedMedia, ...mediaFields } = mediaData;
+
+    const media = await Media.create(mediaFields);
+
+    // Ha van relatedMedia, hozzáadjuk (many-to-many, self-referential)
+    if (relatedMedia && Array.isArray(relatedMedia) && relatedMedia.length > 0) {
+      await media.setRelatedMedia(relatedMedia);
+    }
+
     return await this.getMediaById(media.id);
   }
 
   async getAllMedia() {
-    return await Media.findAll({
+    const mediaList = await Media.findAll({
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+      ],
+    });
+
+    // Admin esetén csak a relatedMediaId-kat adjuk vissza tömbben
+    return mediaList.map((media) => {
+      const mediaJson = media.toJSON();
+      mediaJson.relatedMediaIds = mediaJson.relatedMedia
+        ? mediaJson.relatedMedia.map((rm) => rm.id)
+        : [];
+      delete mediaJson.relatedMedia;
+      return mediaJson;
     });
   }
 
@@ -31,17 +59,42 @@ class MediaService {
     return await Media.findAll({
       where: { status: "PUBLISHED" },
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+        },
+      ],
     });
   }
 
   async getMediaById(id, includeAdjacent = false) {
     const media = await Media.findOne({
       where: { id },
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+      ],
     });
 
     if (!media) {
       return null;
     }
+
+    // Admin esetén csak a relatedMediaId-kat adjuk vissza tömbben
+    const mediaJson = media.toJSON();
+    mediaJson.relatedMediaIds = mediaJson.relatedMedia
+      ? mediaJson.relatedMedia.map((rm) => rm.id)
+      : [];
+    delete mediaJson.relatedMedia;
 
     if (includeAdjacent) {
       try {
@@ -52,16 +105,16 @@ class MediaService {
         });
 
         return {
-          ...media.toJSON(),
+          ...mediaJson,
           previousElementId: adjacentElements.previousElementId,
           nextElementId: adjacentElements.nextElementId,
         };
       } catch (error) {
-        return media;
+        return mediaJson;
       }
     }
 
-    return media;
+    return mediaJson;
   }
 
   async getMediaBySlug(slug) {
@@ -70,6 +123,15 @@ class MediaService {
         slug,
         status: "PUBLISHED",
       },
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+        },
+      ],
     });
 
     return media;
@@ -96,7 +158,19 @@ class MediaService {
       );
     }
 
-    await media.update(mediaData);
+    // Külön kezeljük a relatedMedia adatokat
+    const { relatedMedia, ...mediaFields } = mediaData;
+
+    await media.update(mediaFields);
+
+    // Ha van relatedMedia, frissítjük (many-to-many, self-referential)
+    if (relatedMedia !== undefined) {
+      if (Array.isArray(relatedMedia) && relatedMedia.length > 0) {
+        await media.setRelatedMedia(relatedMedia);
+      } else {
+        await media.setRelatedMedia([]);
+      }
+    }
 
     return await this.getMediaById(id);
   }
@@ -126,7 +200,28 @@ class MediaService {
       sort,
       search,
       filters: queryFilters,
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+      ],
     });
+
+    // Admin esetén csak a relatedMediaId-kat adjuk vissza tömbben
+    if (result.data) {
+      result.data = result.data.map((media) => {
+        const mediaJson = media.toJSON ? media.toJSON() : media;
+        mediaJson.relatedMediaIds = mediaJson.relatedMedia
+          ? mediaJson.relatedMedia.map((rm) => rm.id)
+          : [];
+        delete mediaJson.relatedMedia;
+        return mediaJson;
+      });
+    }
 
     return result;
   }
@@ -138,9 +233,26 @@ class MediaService {
       where: {
         id: ids,
       },
+      include: [
+        {
+          model: Media,
+          as: "relatedMedia",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+      ],
     });
 
-    return updatedMedia;
+    // Admin esetén csak a relatedMediaId-kat adjuk vissza tömbben
+    return updatedMedia.map((media) => {
+      const mediaJson = media.toJSON();
+      mediaJson.relatedMediaIds = mediaJson.relatedMedia
+        ? mediaJson.relatedMedia.map((rm) => rm.id)
+        : [];
+      delete mediaJson.relatedMedia;
+      return mediaJson;
+    });
   }
 }
 

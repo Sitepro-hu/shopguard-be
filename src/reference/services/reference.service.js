@@ -2,6 +2,7 @@ const Reference = require("../models/reference.model");
 const Country = require("../models/country.model");
 const ReferenceResult = require("../models/reference-result.model");
 const ReferenceTestimonial = require("../models/reference-testimonial.model");
+const Media = require("../../media/models/media.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const {
   ReferenceErrors,
@@ -20,8 +21,8 @@ class ReferenceService {
       );
     }
 
-    // Külön kezeljük a countries, results és testimonials adatokat
-    const { countries, results, testimonials, ...referenceFields } = referenceData;
+    // Külön kezeljük a countries, results, testimonials, media és relatedReferences adatokat
+    const { countries, results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
 
     const reference = await Reference.create(referenceFields);
 
@@ -48,11 +49,21 @@ class ReferenceService {
       await ReferenceTestimonial.bulkCreate(testimonialItems);
     }
 
+    // Ha van media, hozzáadjuk (many-to-many, related media)
+    if (media && Array.isArray(media) && media.length > 0) {
+      await reference.setMedia(media);
+    }
+
+    // Ha van relatedReferences, hozzáadjuk (many-to-many, self-referential)
+    if (relatedReferences && Array.isArray(relatedReferences) && relatedReferences.length > 0) {
+      await reference.setRelatedReferences(relatedReferences);
+    }
+
     return await this.getReferenceById(reference.id);
   }
 
   async getAllReferences() {
-    return await Reference.findAll({
+    const references = await Reference.findAll({
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -73,7 +84,35 @@ class ReferenceService {
           required: false,
           order: [["displayOrder", "ASC"]],
         },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
+    });
+
+    // Admin esetén csak a mediaId-kat és relatedReferenceId-kat adjuk vissza tömbben
+    return references.map((reference) => {
+      const referenceJson = reference.toJSON();
+      referenceJson.mediaIds = referenceJson.media
+        ? referenceJson.media.map((m) => m.id)
+        : [];
+      referenceJson.relatedReferenceIds = referenceJson.relatedReferences
+        ? referenceJson.relatedReferences.map((rr) => rr.id)
+        : [];
+      delete referenceJson.media;
+      delete referenceJson.relatedReferences;
+      return referenceJson;
     });
   }
 
@@ -99,6 +138,20 @@ class ReferenceService {
           as: "testimonials",
           required: false,
           order: [["displayOrder", "ASC"]],
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
         },
       ],
     });
@@ -126,12 +179,37 @@ class ReferenceService {
           required: false,
           order: [["displayOrder", "ASC"]],
         },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
 
     if (!reference) {
       return null;
     }
+
+    // Admin esetén csak a mediaId-kat és relatedReferenceId-kat adjuk vissza tömbben
+    const referenceJson = reference.toJSON();
+    referenceJson.mediaIds = referenceJson.media
+      ? referenceJson.media.map((m) => m.id)
+      : [];
+    referenceJson.relatedReferenceIds = referenceJson.relatedReferences
+      ? referenceJson.relatedReferences.map((rr) => rr.id)
+      : [];
+    delete referenceJson.media;
+    delete referenceJson.relatedReferences;
 
     if (includeAdjacent) {
       try {
@@ -142,16 +220,16 @@ class ReferenceService {
         });
 
         return {
-          ...reference.toJSON(),
+          ...referenceJson,
           previousElementId: adjacentElements.previousElementId,
           nextElementId: adjacentElements.nextElementId,
         };
       } catch (error) {
-        return reference;
+        return referenceJson;
       }
     }
 
-    return reference;
+    return referenceJson;
   }
 
   async getReferenceBySlug(slug) {
@@ -178,6 +256,20 @@ class ReferenceService {
           as: "testimonials",
           required: false,
           order: [["displayOrder", "ASC"]],
+        },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          where: { status: "PUBLISHED" },
+          through: { attributes: [] },
         },
       ],
     });
@@ -206,8 +298,8 @@ class ReferenceService {
       );
     }
 
-    // Külön kezeljük a countries, results és testimonials adatokat
-    const { countries, results, testimonials, ...referenceFields } = referenceData;
+    // Külön kezeljük a countries, results, testimonials, media és relatedReferences adatokat
+    const { countries, results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
 
     await reference.update(referenceFields);
 
@@ -241,6 +333,24 @@ class ReferenceService {
           referenceId: id,
         }));
         await ReferenceTestimonial.bulkCreate(testimonialItems);
+      }
+    }
+
+    // Ha van media, frissítjük (many-to-many, related media)
+    if (media !== undefined) {
+      if (Array.isArray(media) && media.length > 0) {
+        await reference.setMedia(media);
+      } else {
+        await reference.setMedia([]);
+      }
+    }
+
+    // Ha van relatedReferences, frissítjük (many-to-many, self-referential)
+    if (relatedReferences !== undefined) {
+      if (Array.isArray(relatedReferences) && relatedReferences.length > 0) {
+        await reference.setRelatedReferences(relatedReferences);
+      } else {
+        await reference.setRelatedReferences([]);
       }
     }
 
@@ -289,8 +399,38 @@ class ReferenceService {
           as: "testimonials",
           required: false,
         },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
+
+    // Admin esetén csak a mediaId-kat és relatedReferenceId-kat adjuk vissza tömbben
+    if (result.data) {
+      result.data = result.data.map((reference) => {
+        const referenceJson = reference.toJSON ? reference.toJSON() : reference;
+        referenceJson.mediaIds = referenceJson.media
+          ? referenceJson.media.map((m) => m.id)
+          : [];
+        referenceJson.relatedReferenceIds = referenceJson.relatedReferences
+          ? referenceJson.relatedReferences.map((rr) => rr.id)
+          : [];
+        delete referenceJson.media;
+        delete referenceJson.relatedReferences;
+        return referenceJson;
+      });
+    }
 
     return result;
   }
@@ -319,10 +459,36 @@ class ReferenceService {
           as: "testimonials",
           required: false,
         },
+        {
+          model: Media,
+          as: "media",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
+        {
+          model: Reference,
+          as: "relatedReferences",
+          required: false,
+          through: { attributes: [] },
+          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
+        },
       ],
     });
 
-    return updatedReferences;
+    // Admin esetén csak a mediaId-kat és relatedReferenceId-kat adjuk vissza tömbben
+    return updatedReferences.map((reference) => {
+      const referenceJson = reference.toJSON();
+      referenceJson.mediaIds = referenceJson.media
+        ? referenceJson.media.map((m) => m.id)
+        : [];
+      referenceJson.relatedReferenceIds = referenceJson.relatedReferences
+        ? referenceJson.relatedReferences.map((rr) => rr.id)
+        : [];
+      delete referenceJson.media;
+      delete referenceJson.relatedReferences;
+      return referenceJson;
+    });
   }
 }
 
