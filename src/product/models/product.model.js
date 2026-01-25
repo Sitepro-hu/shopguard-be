@@ -15,7 +15,6 @@ const Product = sequelize.define("Product", {
   slug: {
     type: DataTypes.STRING,
     allowNull: true,
-    unique: true,
   },
   productSubcategoryId: {
     type: DataTypes.INTEGER,

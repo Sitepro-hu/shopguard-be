@@ -14,7 +14,6 @@ const Media = sequelize.define("Media", {
   slug: {
     type: DataTypes.STRING,
     allowNull: true,
-    unique: true,
   },
   shortDescription: {
     type: DataTypes.TEXT,

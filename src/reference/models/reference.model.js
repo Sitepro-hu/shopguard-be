@@ -14,7 +14,6 @@ const Reference = sequelize.define("Reference", {
   slug: {
     type: DataTypes.STRING,
     allowNull: true,
-    unique: true,
   },
   imgSrc: {
     type: DataTypes.STRING,

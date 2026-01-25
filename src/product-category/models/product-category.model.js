@@ -14,7 +14,6 @@ const ProductCategory = sequelize.define("ProductCategory", {
   slug: {
     type: DataTypes.STRING,
     allowNull: true,
-    unique: true,
   },
   description: {
     type: DataTypes.TEXT,

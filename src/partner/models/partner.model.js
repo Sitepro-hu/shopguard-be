@@ -13,7 +13,7 @@ const Partner = sequelize.define("Partner", {
   },
   logoSrc: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   displayOrder: {
     type: DataTypes.INTEGER,
