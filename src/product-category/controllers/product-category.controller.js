@@ -39,6 +39,19 @@ class ProductCategoryController {
     }
   }
 
+  async getProductCategoryBySlug(req, res) {
+    try {
+      const { slug } = req.params;
+      const productCategory = await productCategoryService.getProductCategoryBySlug(slug);
+      if (!productCategory) {
+        throw ProductCategoryErrors.notFound();
+      }
+      handleSuccess(res, SUCCESS_CODES.PRODUCT_CATEGORY.QUERY_SUCCESS, productCategory);
+    } catch (error) {
+      handleError(res, error, ERROR_CODES.PRODUCT_CATEGORY.QUERY_FAILED);
+    }
+  }
+
   async getProductCategoryById(req, res) {
     try {
       const productCategory = await productCategoryService.getProductCategoryById(

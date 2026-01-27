@@ -12,10 +12,6 @@ const ProductSubcategory = sequelize.define("ProductSubcategory", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  subtitle: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   slug: {
     type: DataTypes.STRING,
     allowNull: true,

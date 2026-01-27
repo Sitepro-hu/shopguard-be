@@ -156,6 +156,65 @@ class ProductCategoryService {
 
     return updatedProductCategories;
   }
+
+  async getProductCategoryBySlug(slug) {
+    const Product = require("../../product/models/product.model");
+    const ProductGallery = require("../../product/models/product-gallery.model");
+    const ProductDownloadable = require("../../product/models/product-downloadable.model");
+
+    const productCategory = await ProductCategory.findOne({
+      where: {
+        slug,
+        status: "PUBLISHED",
+      },
+      include: [
+        {
+          model: ProductCategoryGroup,
+          as: "group",
+          required: false,
+        },
+        {
+          model: ProductSubcategory,
+          as: "subcategories",
+          required: false,
+          where: { status: "PUBLISHED" },
+          order: [["displayOrder", "ASC"]],
+          include: [
+            {
+              model: Product,
+              as: "products",
+              required: false,
+              where: { status: "PUBLISHED" },
+              order: [["displayOrder", "ASC"]],
+              include: [
+                {
+                  model: ProductGallery,
+                  as: "gallery",
+                  required: false,
+                  order: [["displayOrder", "ASC"]],
+                },
+                {
+                  model: ProductDownloadable,
+                  as: "downloadables",
+                  required: false,
+                  order: [["displayOrder", "ASC"]],
+                },
+                {
+                  model: require("../../media/models/media.model"),
+                  as: "media",
+                  required: false,
+                  where: { status: "PUBLISHED" },
+                  through: { attributes: [] },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    return productCategory;
+  }
 }
 
 module.exports = new ProductCategoryService();

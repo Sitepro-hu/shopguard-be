@@ -5,6 +5,7 @@ const { verifyAdminToken, checkUserStatus } = require("../../user/middlewares/au
 
 // Public routes
 router.get("/", productCategoryController.getPublishedProductCategories);
+router.get("/slug/:slug", productCategoryController.getProductCategoryBySlug);
 
 // Protected routes (admin only)
 router.post("/admin", verifyAdminToken, checkUserStatus, productCategoryController.createProductCategory);
