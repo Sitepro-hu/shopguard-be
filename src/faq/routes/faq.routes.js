@@ -6,6 +6,9 @@ const {
   checkUserStatus,
 } = require("../../user/middlewares/auth.middleware");
 
+// Public routes
+router.get("/", faqController.getPublishedFAQsGroupedByCategory);
+
 // Protected routes (admin only)
 router.post(
   "/admin",

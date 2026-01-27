@@ -39,6 +39,15 @@ class FAQController {
     }
   }
 
+  async getPublishedFAQsGroupedByCategory(req, res) {
+    try {
+      const categories = await faqService.getPublishedFAQsGroupedByCategory();
+      handleSuccess(res, SUCCESS_CODES.FAQ.QUERY_SUCCESS, categories);
+    } catch (error) {
+      handleError(res, error, ERROR_CODES.FAQ.QUERY_FAILED);
+    }
+  }
+
   async getFAQById(req, res) {
     try {
       const faq = await faqService.getFAQById(req.params.id, true);

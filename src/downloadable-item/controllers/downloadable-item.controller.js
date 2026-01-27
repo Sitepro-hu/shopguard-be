@@ -39,6 +39,16 @@ class DownloadableItemController {
     }
   }
 
+  async getPublishedDownloadableItemsGroupedByCategory(req, res) {
+    try {
+      const categories =
+        await downloadableItemService.getPublishedDownloadableItemsGroupedByCategory();
+      handleSuccess(res, SUCCESS_CODES.DOWNLOADABLE_ITEM.QUERY_SUCCESS, categories);
+    } catch (error) {
+      handleError(res, error, ERROR_CODES.DOWNLOADABLE_ITEM.QUERY_FAILED);
+    }
+  }
+
   async getDownloadableItemById(req, res) {
     try {
       const downloadableItem = await downloadableItemService.getDownloadableItemById(

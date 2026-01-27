@@ -40,6 +40,22 @@ class DownloadableItemService {
     });
   }
 
+  async getPublishedDownloadableItemsGroupedByCategory() {
+    return await DownloadableCategory.findAll({
+      where: { status: "PUBLISHED" },
+      order: [["displayOrder", "ASC"]],
+      include: [
+        {
+          model: DownloadableItem,
+          as: "items",
+          required: false,
+          where: { status: "PUBLISHED" },
+          order: [["displayOrder", "ASC"]],
+        },
+      ],
+    });
+  }
+
   async getDownloadableItemById(id, includeAdjacent = false) {
     const downloadableItem = await DownloadableItem.findOne({
       where: { id },

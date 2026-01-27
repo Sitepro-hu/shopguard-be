@@ -29,6 +29,22 @@ class FAQService {
     });
   }
 
+  async getPublishedFAQsGroupedByCategory() {
+    return await FaqCategory.findAll({
+      where: { status: "PUBLISHED" },
+      order: [["displayOrder", "ASC"]],
+      include: [
+        {
+          model: FAQ,
+          as: "faqs",
+          required: false,
+          where: { status: "PUBLISHED" },
+          order: [["displayOrder", "ASC"]],
+        },
+      ],
+    });
+  }
+
   async getFAQById(id, includeAdjacent = false) {
     const faq = await FAQ.findOne({
       where: { id },

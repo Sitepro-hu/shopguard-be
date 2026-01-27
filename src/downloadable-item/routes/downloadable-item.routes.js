@@ -7,7 +7,7 @@ const {
 } = require("../../user/middlewares/auth.middleware");
 
 // Public routes
-router.get("/", downloadableItemController.getPublishedDownloadableItems);
+router.get("/", downloadableItemController.getPublishedDownloadableItemsGroupedByCategory);
 
 // Protected routes (admin only)
 router.post(
