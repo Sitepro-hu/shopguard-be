@@ -15,6 +15,8 @@ const Country = sequelize.define("Country", {
     type: DataTypes.STRING(2),
     allowNull: false,
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = Country;

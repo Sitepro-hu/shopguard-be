@@ -3,6 +3,7 @@ const ProductGallery = require("../models/product-gallery.model");
 const ProductDownloadable = require("../models/product-downloadable.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
 const ProductCategory = require("../../product-category/models/product-category.model");
+const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 const Reference = require("../../reference/models/reference.model");
 const Country = require("../../reference/models/country.model");
 const ReferenceResult = require("../../reference/models/reference-result.model");
@@ -131,6 +132,13 @@ class ProductService {
               model: ProductCategory,
               as: "category",
               required: false,
+              include: [
+                {
+                  model: ProductCategoryGroup,
+                  as: "group",
+                  required: false,
+                },
+              ],
             },
           ],
         },
@@ -216,6 +224,13 @@ class ProductService {
               model: ProductCategory,
               as: "category",
               required: false,
+              include: [
+                {
+                  model: ProductCategoryGroup,
+                  as: "group",
+                  required: false,
+                },
+              ],
             },
           ],
         },

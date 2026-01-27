@@ -1,5 +1,6 @@
 const ProductSubcategory = require("../models/product-subcategory.model");
 const ProductCategory = require("../../product-category/models/product-category.model");
+const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 const Product = require("../../product/models/product.model");
 const ProductGallery = require("../../product/models/product-gallery.model");
 const ProductDownloadable = require("../../product/models/product-downloadable.model");
@@ -38,13 +39,20 @@ class ProductSubcategoryService {
   }
 
   async getProductSubcategoryById(id, includeAdjacent = false) {
-    const productSubcategory = await ProductSubcategory.findOne({
+    const productSubcategory = await ProductSubcategory.findOne({ 
       where: { id },
       include: [
         {
           model: ProductCategory,
           as: "category",
           required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
         },
       ],
     });
@@ -86,6 +94,13 @@ class ProductSubcategoryService {
           model: ProductCategory,
           as: "category",
           required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
         },
         {
           model: Product,

@@ -32,6 +32,8 @@ const FAQ = sequelize.define("FAQ", {
       key: "id",
     },
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = FAQ;

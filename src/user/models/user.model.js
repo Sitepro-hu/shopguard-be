@@ -69,6 +69,7 @@ const User = sequelize.define(
         if (user.email) user.email = user.email.trim().toLowerCase();
       },
     },
+    indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
   }
 );
 

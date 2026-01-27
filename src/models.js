@@ -6,6 +6,7 @@ const FAQ = require("./faq/models/faq.model");
 const Testimonial = require("./testimonial/models/testimonial.model");
 const FaqCategory = require("./faq/models/faq-category.model");
 const HeroSlider = require("./hero-slider/models/hero-slider.model");
+const ProductCategoryGroup = require("./product-category-group/models/product-category-group.model");
 const ProductCategory = require("./product-category/models/product-category.model");
 const ProductSubcategory = require("./product-subcategory/models/product-subcategory.model");
 const Product = require("./product/models/product.model");
@@ -42,6 +43,18 @@ FaqCategory.hasMany(FAQ, {
   foreignKey: "faqCategoryId",
   as: "faqs",
   onDelete: "SET NULL",
+});
+
+// ProductCategoryGroup - ProductCategory associations
+ProductCategory.belongsTo(ProductCategoryGroup, {
+  as: "group",
+  foreignKey: "productCategoryGroupId",
+  onDelete: "CASCADE",
+});
+ProductCategoryGroup.hasMany(ProductCategory, {
+  foreignKey: "productCategoryGroupId",
+  as: "categories",
+  onDelete: "CASCADE",
 });
 
 // ProductCategory - ProductSubcategory associations
@@ -213,6 +226,7 @@ module.exports = {
   Testimonial,
   FaqCategory,
   HeroSlider,
+  ProductCategoryGroup,
   ProductCategory,
   ProductSubcategory,
   Product,

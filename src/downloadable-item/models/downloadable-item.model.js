@@ -33,6 +33,8 @@ const DownloadableItem = sequelize.define("DownloadableItem", {
       key: "id",
     },
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = DownloadableItem;

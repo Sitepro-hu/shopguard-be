@@ -1,15 +1,27 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../shared/database-helpers/database");
 
-const DownloadableCategory = sequelize.define("DownloadableCategory", {
+const ProductCategoryGroup = sequelize.define("ProductCategoryGroup", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  slug: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  imgSrc: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   displayOrder: {
     type: DataTypes.INTEGER,
@@ -24,4 +36,4 @@ const DownloadableCategory = sequelize.define("DownloadableCategory", {
   indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
-module.exports = DownloadableCategory;
+module.exports = ProductCategoryGroup;

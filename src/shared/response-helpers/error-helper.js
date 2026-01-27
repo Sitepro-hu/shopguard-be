@@ -124,6 +124,19 @@ const HeroSliderErrors = {
 };
 
 /**
+ * Product Category Group hibák
+ */
+const ProductCategoryGroupErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PRODUCT_CATEGORY_GROUP.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY_GROUP.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY_GROUP.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_CATEGORY_GROUP.DELETE_FAILED, details),
+};
+
+/**
  * Product Category hibák
  */
 const ProductCategoryErrors = {
@@ -360,6 +373,7 @@ module.exports = {
   SubscriberErrors,
   TestimonialErrors,
   HeroSliderErrors,
+  ProductCategoryGroupErrors,
   ProductCategoryErrors,
   ProductSubcategoryErrors,
   ProductErrors,

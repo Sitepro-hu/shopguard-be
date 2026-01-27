@@ -29,6 +29,8 @@ const ProductGallery = sequelize.define("ProductGallery", {
     allowNull: false,
     defaultValue: 1000,
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = ProductGallery;

@@ -32,6 +32,8 @@ const InternationalContact = sequelize.define("InternationalContact", {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = InternationalContact;

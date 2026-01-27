@@ -20,6 +20,8 @@ const PasswordResetRequest = sequelize.define("PasswordResetRequest", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = PasswordResetRequest;

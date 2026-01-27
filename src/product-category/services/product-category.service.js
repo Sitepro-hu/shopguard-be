@@ -1,4 +1,5 @@
 const ProductCategory = require("../models/product-category.model");
+const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const {
@@ -33,6 +34,12 @@ class ProductCategoryService {
       order: [["displayOrder", "ASC"]],
       include: [
         {
+          model: ProductCategoryGroup,
+          as: "group",
+          required: false,
+          where: { status: "PUBLISHED" },
+        },
+        {
           model: ProductSubcategory,
           as: "subcategories",
           required: false,
@@ -44,7 +51,21 @@ class ProductCategoryService {
   }
 
   async getProductCategoryById(id, includeAdjacent = false) {
-    const productCategory = await ProductCategory.findOne({ where: { id } });
+    const productCategory = await ProductCategory.findOne({ 
+      where: { id },
+      include: [
+        {
+          model: ProductCategoryGroup,
+          as: "group",
+          required: false,
+        },
+        {
+          model: ProductSubcategory,
+          as: "subcategories",
+          required: false,
+        },
+      ],
+    });
 
     if (!productCategory) {
       return null;

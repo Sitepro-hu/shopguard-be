@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../shared/database-helpers/database");
+const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 
 const ProductCategory = sequelize.define("ProductCategory", {
   id: {
@@ -32,6 +33,16 @@ const ProductCategory = sequelize.define("ProductCategory", {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
   },
+  productCategoryGroupId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: ProductCategoryGroup,
+      key: "id",
+    },
+  },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = ProductCategory;

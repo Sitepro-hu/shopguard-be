@@ -19,6 +19,8 @@ const Contact = sequelize.define("Contact", {
   message: DataTypes.TEXT,
   privacyPolicy: DataTypes.BOOLEAN,
   status: DataTypes.ENUM(["UNREAD", "READ", "DELETED"]),
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = Contact;

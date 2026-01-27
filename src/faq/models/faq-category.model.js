@@ -19,6 +19,8 @@ const FaqCategory = sequelize.define("FaqCategory", {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = FaqCategory;

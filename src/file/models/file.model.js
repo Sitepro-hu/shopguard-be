@@ -38,6 +38,8 @@ const File = sequelize.define("File", {
     type: DataTypes.ENUM(["PUBLISHED", "DELETED"]),
     defaultValue: "PUBLISHED",
   },
+}, {
+  indexes: [], // Ne hozzon létre automatikus indexeket, csak primary key és foreign key indexek
 });
 
 module.exports = File;

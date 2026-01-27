@@ -46,6 +46,13 @@
       "DELETE_FAILED": "Sikertelen hero slider törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "PRODUCT_CATEGORY_GROUP": {
+      "NOT_FOUND": "Termékkategória csoport nem található!",
+      "CREATE_FAILED": "Sikertelen termékkategória csoport létrehozás!",
+      "UPDATE_FAILED": "Sikertelen termékkategória csoport frissítés!",
+      "DELETE_FAILED": "Sikertelen termékkategória csoport törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "PRODUCT_CATEGORY": {
       "NOT_FOUND": "Termékkategória nem található!",
       "CREATE_FAILED": "Sikertelen termékkategória létrehozás!",
@@ -201,6 +208,12 @@
       "CREATE_SUCCESS": "👍 Sikeres hero slider létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres hero slider frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres hero slider törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "PRODUCT_CATEGORY_GROUP": {
+      "CREATE_SUCCESS": "👍 Sikeres termékkategória csoport létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres termékkategória csoport frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres termékkategória csoport törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "PRODUCT_CATEGORY": {
