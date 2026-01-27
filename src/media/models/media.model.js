@@ -31,6 +31,10 @@ const Media = sequelize.define("Media", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  videoThumbnailSrc: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   status: {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
