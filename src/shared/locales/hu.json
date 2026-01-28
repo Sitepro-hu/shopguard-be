@@ -130,6 +130,13 @@
       "DELETE_FAILED": "Sikertelen szótár törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "GLOSSARY": {
+      "NOT_FOUND": "Szótár nem található!",
+      "CREATE_FAILED": "Sikertelen szótár létrehozás!",
+      "UPDATE_FAILED": "Sikertelen szótár frissítés!",
+      "DELETE_FAILED": "Sikertelen szótár törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -281,6 +288,12 @@
       "CREATE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres nemzetközi kapcsolat törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "GLOSSARY": {
+      "CREATE_SUCCESS": "👍 Sikeres szótár létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres szótár frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres szótár törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "GLOSSARY": {

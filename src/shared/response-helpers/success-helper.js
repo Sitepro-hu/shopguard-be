@@ -149,6 +149,11 @@ const SUCCESS_CODES = {
     QUERY_SUCCESS: "GLOSSARY.QUERY_SUCCESS",
   },
 
+  // Általános sikeres műveletek
+  GENERAL: {
+    QUERY_SUCCESS: "GENERAL.QUERY_SUCCESS",
+  },
+
   // Contact sikeres műveletek
   CONTACT: {
     CREATE_SUCCESS: "CONTACT.CREATE_SUCCESS",
