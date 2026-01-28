@@ -21,6 +21,7 @@ const Partner = require("./partner/models/partner.model");
 const DownloadableItem = require("./downloadable-item/models/downloadable-item.model");
 const DownloadableCategory = require("./downloadable-item/models/downloadable-category.model");
 const InternationalContact = require("./international-contact/models/international-contact.model");
+const Glossary = require("./glossary/models/glossary.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",
@@ -241,4 +242,5 @@ module.exports = {
   DownloadableItem,
   DownloadableCategory,
   InternationalContact,
+  Glossary,
 };

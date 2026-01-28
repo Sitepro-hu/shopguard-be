@@ -267,6 +267,19 @@ const InternationalContactErrors = {
 };
 
 /**
+ * Glossary hibák
+ */
+const GlossaryErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.GLOSSARY.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.GLOSSARY.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.GLOSSARY.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.GLOSSARY.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -384,6 +397,7 @@ module.exports = {
   DownloadableItemErrors,
   DownloadableCategoryErrors,
   InternationalContactErrors,
+  GlossaryErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,
