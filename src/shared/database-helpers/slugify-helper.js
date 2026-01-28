@@ -1,5 +1,5 @@
 const { default: slugify } = require("slugify");
-const sequelize = require("./database");
+const { Op } = require("sequelize");
 
 // Helper függvény az egyedi slug generálásához
 const generateUniqueSlug = async (model, baseSlug, id = null) => {
@@ -10,7 +10,7 @@ const generateUniqueSlug = async (model, baseSlug, id = null) => {
     // WHERE feltétel összeállítása
     const whereCondition = { slug };
     if (id) {
-      whereCondition.id = { [sequelize.Op.ne]: id }; // ID kizárása frissítéskor
+      whereCondition.id = { [Op.ne]: id }; // ID kizárása frissítéskor
     }
 
     // Ellenőrizd, hogy létezik-e már ilyen slug

@@ -374,7 +374,8 @@ function handleError(res, error, errorCode) {
     return errorResponse(res, error.message, error.code);
   } else {
     const defaultMessage = getErrorMessage(errorCode);
-    return errorResponse(res, defaultMessage, errorCode);
+    const errorDetails = error?.message ?? (error != null ? String(error) : null);
+    return errorResponse(res, defaultMessage, errorCode, true, 400, errorDetails);
   }
 }
 

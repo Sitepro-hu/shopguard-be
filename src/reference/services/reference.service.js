@@ -287,10 +287,8 @@ class ReferenceService {
     }
 
     // Ha nincs slug vagy üres, és változott a title, generáljuk a title-ből
-    if (
-      (!referenceData.slug || referenceData.slug.trim() === "") &&
-      referenceData.title
-    ) {
+    const slugEmpty = referenceData.slug == null || String(referenceData.slug).trim() === "";
+    if (slugEmpty && referenceData.title) {
       referenceData.slug = await customSlugify(
         Reference,
         referenceData.title,
@@ -300,6 +298,9 @@ class ReferenceService {
 
     // Külön kezeljük a countries, results, testimonials, media és relatedReferences adatokat
     const { countries, results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
+
+    // Ne frissítsük a primary key-t (a body-ban jöhet id)
+    delete referenceFields.id;
 
     await reference.update(referenceFields);
 
@@ -316,10 +317,10 @@ class ReferenceService {
     if (results !== undefined) {
       await ReferenceResult.destroy({ where: { referenceId: id } });
       if (Array.isArray(results) && results.length > 0) {
-        const resultItems = results.map((item) => ({
-          ...item,
-          referenceId: id,
-        }));
+        const resultItems = results.map((item) => {
+          const { id: _id, ...rest } = item;
+          return { ...rest, referenceId: id };
+        });
         await ReferenceResult.bulkCreate(resultItems);
       }
     }
@@ -328,10 +329,10 @@ class ReferenceService {
     if (testimonials !== undefined) {
       await ReferenceTestimonial.destroy({ where: { referenceId: id } });
       if (Array.isArray(testimonials) && testimonials.length > 0) {
-        const testimonialItems = testimonials.map((item) => ({
-          ...item,
-          referenceId: id,
-        }));
+        const testimonialItems = testimonials.map((item) => {
+          const { id: _id, ...rest } = item;
+          return { ...rest, referenceId: id };
+        });
         await ReferenceTestimonial.bulkCreate(testimonialItems);
       }
     }
