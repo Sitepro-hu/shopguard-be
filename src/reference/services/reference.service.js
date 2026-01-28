@@ -1,5 +1,4 @@
 const Reference = require("../models/reference.model");
-const Country = require("../models/country.model");
 const ReferenceResult = require("../models/reference-result.model");
 const ReferenceTestimonial = require("../models/reference-testimonial.model");
 const Media = require("../../media/models/media.model");
@@ -21,15 +20,10 @@ class ReferenceService {
       );
     }
 
-    // Külön kezeljük a countries, results, testimonials, media és relatedReferences adatokat
-    const { countries, results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
+    // Külön kezeljük a results, testimonials, media és relatedReferences adatokat
+    const { results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
 
     const reference = await Reference.create(referenceFields);
-
-    // Ha van countries, hozzáadjuk (many-to-many)
-    if (countries && Array.isArray(countries) && countries.length > 0) {
-      await reference.setCountries(countries);
-    }
 
     // Ha van results, hozzáadjuk
     if (results && Array.isArray(results)) {
@@ -66,12 +60,6 @@ class ReferenceService {
     const references = await Reference.findAll({
       order: [["createdAt", "DESC"]],
       include: [
-        {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
         {
           model: ReferenceResult,
           as: "results",
@@ -122,12 +110,6 @@ class ReferenceService {
       order: [["createdAt", "DESC"]],
       include: [
         {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
-        {
           model: ReferenceResult,
           as: "results",
           required: false,
@@ -161,12 +143,6 @@ class ReferenceService {
     const reference = await Reference.findOne({
       where: { id },
       include: [
-        {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
         {
           model: ReferenceResult,
           as: "results",
@@ -240,12 +216,6 @@ class ReferenceService {
       },
       include: [
         {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
-        {
           model: ReferenceResult,
           as: "results",
           required: false,
@@ -296,22 +266,13 @@ class ReferenceService {
       );
     }
 
-    // Külön kezeljük a countries, results, testimonials, media és relatedReferences adatokat
-    const { countries, results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
+    // Külön kezeljük a results, testimonials, media és relatedReferences adatokat
+    const { results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
 
     // Ne frissítsük a primary key-t (a body-ban jöhet id)
     delete referenceFields.id;
 
     await reference.update(referenceFields);
-
-    // Ha van countries, frissítjük
-    if (countries !== undefined) {
-      if (Array.isArray(countries) && countries.length > 0) {
-        await reference.setCountries(countries);
-      } else {
-        await reference.setCountries([]);
-      }
-    }
 
     // Ha van results, frissítjük (töröljük a régit és létrehozzuk az újat)
     if (results !== undefined) {
@@ -385,12 +346,6 @@ class ReferenceService {
       filters: queryFilters,
       include: [
         {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
-        {
           model: ReferenceResult,
           as: "results",
           required: false,
@@ -444,12 +399,6 @@ class ReferenceService {
         id: ids,
       },
       include: [
-        {
-          model: Country,
-          as: "countries",
-          required: false,
-          through: { attributes: [] },
-        },
         {
           model: ReferenceResult,
           as: "results",

@@ -5,7 +5,6 @@ const ProductSubcategory = require("../../product-subcategory/models/product-sub
 const ProductCategory = require("../../product-category/models/product-category.model");
 const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 const Reference = require("../../reference/models/reference.model");
-const Country = require("../../reference/models/country.model");
 const ReferenceResult = require("../../reference/models/reference-result.model");
 const ReferenceTestimonial = require("../../reference/models/reference-testimonial.model");
 const Media = require("../../media/models/media.model");
@@ -241,12 +240,6 @@ class ProductService {
           where: { status: "PUBLISHED" },
           through: { attributes: [] },
           include: [
-            {
-              model: Country,
-              as: "countries",
-              required: false,
-              through: { attributes: [] },
-            },
             {
               model: ReferenceResult,
               as: "results",

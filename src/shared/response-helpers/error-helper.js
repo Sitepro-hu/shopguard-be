@@ -189,19 +189,6 @@ const ReferenceErrors = {
 };
 
 /**
- * Country hibák
- */
-const CountryErrors = {
-  notFound: () => createStructuredError(ERROR_CODES.COUNTRY.NOT_FOUND),
-  createFailed: (details) =>
-    createStructuredError(ERROR_CODES.COUNTRY.CREATE_FAILED, details),
-  updateFailed: (details) =>
-    createStructuredError(ERROR_CODES.COUNTRY.UPDATE_FAILED, details),
-  deleteFailed: (details) =>
-    createStructuredError(ERROR_CODES.COUNTRY.DELETE_FAILED, details),
-};
-
-/**
  * Media hibák
  */
 const MediaErrors = {
@@ -392,7 +379,6 @@ module.exports = {
   ProductSubcategoryErrors,
   ProductErrors,
   ReferenceErrors,
-  CountryErrors,
   MediaErrors,
   PartnerErrors,
   DownloadableItemErrors,

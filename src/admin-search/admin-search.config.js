@@ -16,7 +16,6 @@ const FaqCategory = require("../faq/models/faq-category.model");
 const DownloadableItem = require("../downloadable-item/models/downloadable-item.model");
 const DownloadableCategory = require("../downloadable-item/models/downloadable-category.model");
 const InternationalContact = require("../international-contact/models/international-contact.model");
-const Country = require("../reference/models/country.model");
 
 /**
  * Konfiguráció: mely modellekben, mely mezőkben keresünk.
@@ -155,13 +154,6 @@ const adminSearchConfig = [
     titleField: "name",
     searchFields: ["countryName", "name", "email", "telephone"],
     where: { status: { [Op.ne]: "DELETED" } },
-  },
-  // Country
-  {
-    model: Country,
-    type: "country",
-    titleField: "name",
-    searchFields: ["name", "code"],
   },
 ];
 

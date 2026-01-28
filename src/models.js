@@ -13,7 +13,6 @@ const Product = require("./product/models/product.model");
 const ProductGallery = require("./product/models/product-gallery.model");
 const ProductDownloadable = require("./product/models/product-downloadable.model");
 const Reference = require("./reference/models/reference.model");
-const Country = require("./reference/models/country.model");
 const ReferenceResult = require("./reference/models/reference-result.model");
 const ReferenceTestimonial = require("./reference/models/reference-testimonial.model");
 const Media = require("./media/models/media.model");
@@ -104,20 +103,6 @@ Product.hasMany(ProductDownloadable, {
   foreignKey: "productId",
   as: "downloadables",
   onDelete: "CASCADE",
-});
-
-// Reference - Country associations (many-to-many)
-Reference.belongsToMany(Country, {
-  through: "ReferenceCountries",
-  as: "countries",
-  foreignKey: "referenceId",
-  otherKey: "countryId",
-});
-Country.belongsToMany(Reference, {
-  through: "ReferenceCountries",
-  as: "references",
-  foreignKey: "countryId",
-  otherKey: "referenceId",
 });
 
 // Reference - ReferenceResult associations
@@ -234,7 +219,6 @@ module.exports = {
   ProductGallery,
   ProductDownloadable,
   Reference,
-  Country,
   ReferenceResult,
   ReferenceTestimonial,
   Media,

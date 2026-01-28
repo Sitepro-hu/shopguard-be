@@ -27,6 +27,10 @@ const Reference = sequelize.define("Reference", {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  introDescriptionImgSrc: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   longDescription: {
     type: DataTypes.TEXT,
     allowNull: true,
