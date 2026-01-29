@@ -8,6 +8,9 @@ require("dotenv/config");
 // Alkalmazás inicializálása
 const app = express();
 
+// Proxy mögött (pl. nginx): hogy req.protocol és req.secure helyes legyen (HTTPS)
+app.set("trust proxy", 1);
+
 // Köztes rétegek (Middleware-ek)
 app.use(cors());
 app.use(bodyParser.json());
