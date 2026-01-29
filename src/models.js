@@ -81,6 +81,18 @@ ProductSubcategory.hasMany(Product, {
   onDelete: "CASCADE",
 });
 
+// Product - ProductCategoryGroup (direct) associations
+Product.belongsTo(ProductCategoryGroup, {
+  as: "directGroup",
+  foreignKey: "productCategoryGroupId",
+  onDelete: "CASCADE",
+});
+ProductCategoryGroup.hasMany(Product, {
+  foreignKey: "productCategoryGroupId",
+  as: "directProducts",
+  onDelete: "CASCADE",
+});
+
 // Product - ProductGallery associations
 ProductGallery.belongsTo(Product, {
   as: "product",

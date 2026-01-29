@@ -15,6 +15,39 @@ const {
   customSlugify,
 } = require("../../shared/database-helpers/slugify-helper");
 
+function normalizeProductPath(fields, isUpdate = false) {
+  const isDirect = Boolean(fields.isDirectToGroup);
+  const hasSubcategory = fields.productSubcategoryId != null && fields.productSubcategoryId !== "";
+  const hasGroup = fields.productCategoryGroupId != null && fields.productCategoryGroupId !== "";
+
+  const fail = isUpdate ? ProductErrors.updateFailed : ProductErrors.createFailed;
+
+  if (isDirect) {
+    if (!hasGroup) {
+      throw fail(
+        "Direct-to-group product requires productCategoryGroupId"
+      );
+    }
+    return {
+      ...fields,
+      productSubcategoryId: null,
+      productCategoryGroupId: Number(fields.productCategoryGroupId),
+      isDirectToGroup: true,
+    };
+  }
+  if (!hasSubcategory) {
+    throw fail(
+      "Normal product requires productSubcategoryId, or set isDirectToGroup with productCategoryGroupId"
+    );
+  }
+  return {
+    ...fields,
+    productSubcategoryId: Number(fields.productSubcategoryId),
+    productCategoryGroupId: null,
+    isDirectToGroup: false,
+  };
+}
+
 class ProductService {
   async createProduct(productData) {
     // Ha nincs slug vagy üres, generáljuk a title-ből
@@ -23,9 +56,11 @@ class ProductService {
     }
 
     // Külön kezeljük a gallery, downloadable, references és media adatokat
-    const { gallery, downloadables, references, media, ...productFields } = productData;
+    const { gallery, downloadables, references, media, ...productFields } =
+      productData;
 
-    const product = await Product.create(productFields);
+    const normalized = normalizeProductPath(productFields);
+    const product = await Product.create(normalized);
 
     // Ha van gallery, hozzáadjuk
     if (gallery && Array.isArray(gallery)) {
@@ -94,6 +129,11 @@ class ProductService {
           ],
         },
         {
+          model: ProductCategoryGroup,
+          as: "directGroup",
+          required: false,
+        },
+        {
           model: Reference,
           as: "references",
           required: false,
@@ -159,6 +199,11 @@ class ProductService {
               ],
             },
           ],
+        },
+        {
+          model: ProductCategoryGroup,
+          as: "directGroup",
+          required: false,
         },
         {
           model: Reference,
@@ -253,6 +298,11 @@ class ProductService {
           ],
         },
         {
+          model: ProductCategoryGroup,
+          as: "directGroup",
+          required: false,
+        },
+        {
           model: Reference,
           as: "references",
           required: false,
@@ -304,9 +354,12 @@ class ProductService {
     }
 
     // Külön kezeljük a gallery, downloadable, references és media adatokat
-    const { gallery, downloadables, references, media, ...productFields } = productData;
+    const { gallery, downloadables, references, media, ...productFields } =
+      productData;
 
-    await product.update(productFields);
+    const merged = { ...product.get({ plain: true }), ...productFields };
+    const normalized = normalizeProductPath(merged, true);
+    await product.update(normalized);
 
     // Ha van gallery, frissítjük (töröljük a régit és létrehozzuk az újat)
     if (gallery !== undefined) {
@@ -399,6 +452,11 @@ class ProductService {
         ],
       },
       {
+        model: ProductCategoryGroup,
+        as: "directGroup",
+        required: false,
+      },
+      {
         model: Reference,
         as: "references",
         required: false,
@@ -476,6 +534,11 @@ class ProductService {
         {
           model: ProductDownloadable,
           as: "downloadables",
+          required: false,
+        },
+        {
+          model: ProductCategoryGroup,
+          as: "directGroup",
           required: false,
         },
         {

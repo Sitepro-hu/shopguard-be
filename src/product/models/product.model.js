@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../shared/database-helpers/database");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
+const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 
 const Product = sequelize.define("Product", {
   id: {
@@ -18,11 +19,24 @@ const Product = sequelize.define("Product", {
   },
   productSubcategoryId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: ProductSubcategory,
       key: "id",
     },
+  },
+  productCategoryGroupId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: ProductCategoryGroup,
+      key: "id",
+    },
+  },
+  isDirectToGroup: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
   shortDescription: {
     type: DataTypes.TEXT,

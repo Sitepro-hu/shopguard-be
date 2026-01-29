@@ -1,6 +1,7 @@
 const ProductCategoryGroup = require("../models/product-category-group.model");
 const ProductCategory = require("../../product-category/models/product-category.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
+const Product = require("../../product/models/product.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const {
   ProductCategoryGroupErrors,
@@ -48,6 +49,13 @@ class ProductCategoryGroupService {
               order: [["displayOrder", "ASC"]],
             },
           ],
+        },
+        {
+          model: Product,
+          as: "directProducts",
+          required: false,
+          where: { status: "PUBLISHED", isDirectToGroup: true },
+          order: [["displayOrder", "ASC"]],
         },
       ],
     });
