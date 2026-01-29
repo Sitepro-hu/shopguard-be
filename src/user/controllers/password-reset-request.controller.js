@@ -16,21 +16,14 @@ const {
   SUCCESS_CODES,
   handleSuccess,
 } = require("../../shared/response-helpers/success-helper");
-const { randomBytes } = require("@noble/hashes/utils.js");
 
 exports.createPasswordResetRequest = async (req, res) => {
   try {
     const user = await userService.getUserByEmail(req.body.email);
     if (!user) throw UserErrors.notFound();
 
-    const { rawToken, hashedToken } = await generateToken();
-    const passwordResetRequestRaw = {
-      userId: user.id,
-      token: hashedToken,
-    };
-
-    await passwordResetRequestService.createPasswordResetRequest(
-      passwordResetRequestRaw
+    const rawToken = await passwordResetRequestService.createRequestForUser(
+      user.id
     );
 
     const baseUrl = `${req.protocol}://${req.get("host")}`;
@@ -111,8 +104,13 @@ exports.passwordResetSubmit = async (req, res) => {
 
     // Jelszó hash-elése és mentése
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt); // Hash-eld a jelszót
+    const hashedPassword = await bcrypt.hash(password, salt);
     await userService.updateUser(user.id, { passwordHash: hashedPassword });
+
+    // Ha még nem volt verifikálva az email (pl. admin által létrehozott user), most megjelöljük
+    if (!user.emailVerifiedAt) {
+      await userService.verifyEmail(user.email);
+    }
 
     // Felhasznált reset request törlése
     await passwordResetRequestService.removePasswordResetRequest(
@@ -130,11 +128,4 @@ exports.passwordResetSubmit = async (req, res) => {
   } catch (error) {
     handleError(res, error, ERROR_CODES.PASSWORD_RESET.SUBMIT_FAILED);
   }
-};
-
-const generateToken = async () => {
-  const rawToken = Buffer.from(randomBytes(32)).toString("hex");
-  const hashedToken = await bcrypt.hash(rawToken, 10);
-
-  return { rawToken, hashedToken };
 };

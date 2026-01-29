@@ -1,8 +1,23 @@
+const bcrypt = require("bcryptjs");
+const { randomBytes } = require("@noble/hashes/utils.js");
 const { PASSWORD_RESET_TOKEN_TIME } = require("../../shared/config");
 const PasswordResetRequest = require("../models/password-reset-request.model");
 const { Op } = require("sequelize");
 
+const generateToken = async () => {
+  const rawToken = Buffer.from(randomBytes(32)).toString("hex");
+  const hashedToken = await bcrypt.hash(rawToken, 10);
+  return { rawToken, hashedToken };
+};
+
 class PasswordResetRequestService {
+  // Létrehoz egy reset requestet a userhez és visszaadja a nyers tokent (set password / forgot password)
+  async createRequestForUser(userId) {
+    const { rawToken, hashedToken } = await generateToken();
+    await this.createPasswordResetRequest({ userId, token: hashedToken });
+    return rawToken;
+  }
+
   // Új PasswordResetRequest létrehozása
   async createPasswordResetRequest(passwordResetRequestRaw) {
     // Először törlünk minden token-t, amit a userhez tartozik

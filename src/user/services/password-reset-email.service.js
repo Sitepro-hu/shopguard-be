@@ -16,6 +16,23 @@ const sendingPasswordResetEmail = async (user, url) => {
   });
 };
 
+const sendingSetPasswordEmail = async (user, url) => {
+  let html = `
+  <p>Kedves ${user.firstname}!</p>
+  <p>Létrehoztuk a fiókodat a ${process.env.WEBSITE_NAME} oldalon. A jelszavadat aza alábbi linkre kattintva tudod beállítani:<br>
+  <a href="${url}" target="_blank">Jelszó beállítása</a></p>
+  <p><small>Ha nem vártad ezt az e-mailt, kérjük, hagyd figyelmen kívül ezt az e-mailt.</small></p>
+  <p>Üdvözlettel,<br>A(z) ${process.env.WEBSITE_NAME} csapata</p>
+  `;
+
+  await sendingEmail({
+    subject: `Jelszó beállítása - ${process.env.WEBSITE_NAME}`,
+    html: html,
+    to: user.email,
+  });
+};
+
 module.exports = {
   sendingPasswordResetEmail,
+  sendingSetPasswordEmail,
 };

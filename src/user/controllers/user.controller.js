@@ -14,10 +14,17 @@ const {
 const {
   sendingEmailVerification,
 } = require("../services/email-verification.service");
+const passwordResetRequestService = require("../services/password-reset-request.service");
+const {
+  sendingSetPasswordEmail,
+} = require("../services/password-reset-email.service");
 
 exports.createUser = async (req, res) => {
   try {
     const password = req.body.password;
+    const hasPassword =
+      password != null && String(password).trim() !== "";
+
     const userRaw = {
       email: req.body.email,
       lastname: req.body.lastname,
@@ -29,25 +36,34 @@ exports.createUser = async (req, res) => {
     };
 
     const isEmailExists = Boolean(
-      await userService.countUserByEmail(userRaw.email)
+      await userService.countUserByEmail(userRaw.email),
     );
     if (isEmailExists) throw UserErrors.emailExists();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    let user;
+    if (hasPassword) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user = await userService.createUser({
+        ...userRaw,
+        passwordHash: hashedPassword,
+      });
 
-    const user = await userService.createUser({
-      ...userRaw,
-      passwordHash: hashedPassword,
-    });
+      const verificationToken = userService.generateEmailVerificationToken(
+        user.email,
+      );
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const verificationUrl = `${baseUrl}/api/auth/verify-email/${verificationToken}`;
+      await sendingEmailVerification(user, verificationUrl);
+    } else {
+      user = await userService.createUser(userRaw);
 
-    // Email verifikációs token generálása és levél küldése
-    const verificationToken = userService.generateEmailVerificationToken(
-      user.email
-    );
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
-    const verificationUrl = `${baseUrl}/api/auth/verify-email/${verificationToken}`;
-
-    await sendingEmailVerification(user, verificationUrl);
+      const rawToken = await passwordResetRequestService.createRequestForUser(
+        user.id,
+      );
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const setPasswordUrl = `${baseUrl}/api/profile/password-reset/${rawToken}`;
+      await sendingSetPasswordEmail(user, setPasswordUrl);
+    }
 
     handleSuccess(res, SUCCESS_CODES.USER.CREATE_SUCCESS, user);
   } catch (error) {
