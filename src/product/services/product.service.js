@@ -16,35 +16,55 @@ const {
 } = require("../../shared/database-helpers/slugify-helper");
 
 function normalizeProductPath(fields, isUpdate = false) {
-  const isDirect = Boolean(fields.isDirectToGroup);
+  const isDirectGroup = Boolean(fields.isDirectToGroup);
+  const isDirectCategory = Boolean(fields.isDirectToCategory);
   const hasSubcategory = fields.productSubcategoryId != null && fields.productSubcategoryId !== "";
   const hasGroup = fields.productCategoryGroupId != null && fields.productCategoryGroupId !== "";
+  const hasCategory = fields.productCategoryId != null && fields.productCategoryId !== "";
 
   const fail = isUpdate ? ProductErrors.updateFailed : ProductErrors.createFailed;
 
-  if (isDirect) {
+  if (isDirectGroup && isDirectCategory) {
+    throw fail("Use only one of isDirectToGroup or isDirectToCategory");
+  }
+  if (isDirectGroup) {
     if (!hasGroup) {
-      throw fail(
-        "Direct-to-group product requires productCategoryGroupId"
-      );
+      throw fail("Direct-to-group product requires productCategoryGroupId");
     }
     return {
       ...fields,
       productSubcategoryId: null,
+      productCategoryId: null,
       productCategoryGroupId: Number(fields.productCategoryGroupId),
       isDirectToGroup: true,
+      isDirectToCategory: false,
+    };
+  }
+  if (isDirectCategory) {
+    if (!hasCategory) {
+      throw fail("Direct-to-category product requires productCategoryId");
+    }
+    return {
+      ...fields,
+      productSubcategoryId: null,
+      productCategoryGroupId: null,
+      productCategoryId: Number(fields.productCategoryId),
+      isDirectToGroup: false,
+      isDirectToCategory: true,
     };
   }
   if (!hasSubcategory) {
     throw fail(
-      "Normal product requires productSubcategoryId, or set isDirectToGroup with productCategoryGroupId"
+      "Normal product requires productSubcategoryId, or set isDirectToGroup with productCategoryGroupId, or isDirectToCategory with productCategoryId"
     );
   }
   return {
     ...fields,
     productSubcategoryId: Number(fields.productSubcategoryId),
     productCategoryGroupId: null,
+    productCategoryId: null,
     isDirectToGroup: false,
+    isDirectToCategory: false,
   };
 }
 
@@ -134,6 +154,18 @@ class ProductService {
           required: false,
         },
         {
+          model: ProductCategory,
+          as: "directCategory",
+          required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
+        },
+        {
           model: Reference,
           as: "references",
           required: false,
@@ -204,6 +236,18 @@ class ProductService {
           model: ProductCategoryGroup,
           as: "directGroup",
           required: false,
+        },
+        {
+          model: ProductCategory,
+          as: "directCategory",
+          required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
         },
         {
           model: Reference,
@@ -301,6 +345,18 @@ class ProductService {
           model: ProductCategoryGroup,
           as: "directGroup",
           required: false,
+        },
+        {
+          model: ProductCategory,
+          as: "directCategory",
+          required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
         },
         {
           model: Reference,
@@ -457,6 +513,18 @@ class ProductService {
         required: false,
       },
       {
+        model: ProductCategory,
+        as: "directCategory",
+        required: false,
+        include: [
+          {
+            model: ProductCategoryGroup,
+            as: "group",
+            required: false,
+          },
+        ],
+      },
+      {
         model: Reference,
         as: "references",
         required: false,
@@ -540,6 +608,18 @@ class ProductService {
           model: ProductCategoryGroup,
           as: "directGroup",
           required: false,
+        },
+        {
+          model: ProductCategory,
+          as: "directCategory",
+          required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
         },
         {
           model: Reference,

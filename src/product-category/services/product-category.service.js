@@ -1,6 +1,7 @@
 const ProductCategory = require("../models/product-category.model");
 const ProductCategoryGroup = require("../../product-category-group/models/product-category-group.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
+const Product = require("../../product/models/product.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const {
   ProductCategoryErrors,
@@ -51,6 +52,13 @@ class ProductCategoryService {
           as: "subcategories",
           required: false,
           where: { status: "PUBLISHED" },
+          order: [["displayOrder", "ASC"]],
+        },
+        {
+          model: Product,
+          as: "directProducts",
+          required: false,
+          where: { status: "PUBLISHED", isDirectToCategory: true },
           order: [["displayOrder", "ASC"]],
         },
       ],
@@ -200,7 +208,6 @@ class ProductCategoryService {
   }
 
   async getProductCategoryBySlug(slug) {
-    const Product = require("../../product/models/product.model");
     const ProductGallery = require("../../product/models/product-gallery.model");
     const ProductDownloadable = require("../../product/models/product-downloadable.model");
 
@@ -251,6 +258,13 @@ class ProductCategoryService {
               ],
             },
           ],
+        },
+        {
+          model: Product,
+          as: "directProducts",
+          required: false,
+          where: { status: "PUBLISHED", isDirectToCategory: true },
+          order: [["displayOrder", "ASC"]],
         },
       ],
     });

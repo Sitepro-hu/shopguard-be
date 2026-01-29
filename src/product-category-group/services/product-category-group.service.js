@@ -48,6 +48,13 @@ class ProductCategoryGroupService {
               where: { status: "PUBLISHED" },
               order: [["displayOrder", "ASC"]],
             },
+            {
+              model: Product,
+              as: "directProducts",
+              required: false,
+              where: { status: "PUBLISHED", isDirectToCategory: true },
+              order: [["displayOrder", "ASC"]],
+            },
           ],
         },
         {
