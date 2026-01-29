@@ -9,6 +9,26 @@ const {
 const getAdjacentElements = require("../../shared/database-helpers/adjacent-element.helper");
 const { customSlugify } = require("../../shared/database-helpers/slugify-helper");
 
+function normalizeCountries(val) {
+  if (val == null) return [];
+  if (Array.isArray(val)) return val.map((c) => String(c));
+  return [String(val)];
+}
+
+function ensureCountriesArray(ref) {
+  if (!ref) return ref;
+  let c = ref.countries;
+  if (typeof c === "string") {
+    try {
+      c = JSON.parse(c);
+    } catch {
+      c = [];
+    }
+  }
+  ref.countries = Array.isArray(c) ? c.map((x) => String(x)) : [];
+  return ref;
+}
+
 class ReferenceService {
   async createReference(referenceData) {
     // Ha nincs slug vagy üres, generáljuk a title-ből
@@ -22,6 +42,8 @@ class ReferenceService {
 
     // Külön kezeljük a results, testimonials, media és relatedReferences adatokat
     const { results, testimonials, media, relatedReferences, ...referenceFields } = referenceData;
+
+    referenceFields.countries = normalizeCountries(referenceFields.countries);
 
     const reference = await Reference.create(referenceFields);
 
@@ -100,12 +122,12 @@ class ReferenceService {
         : [];
       delete referenceJson.media;
       delete referenceJson.relatedReferences;
-      return referenceJson;
+      return ensureCountriesArray(referenceJson);
     });
   }
 
   async getPublishedReferences() {
-    return await Reference.findAll({
+    const references = await Reference.findAll({
       where: { status: "PUBLISHED" },
       order: [["createdAt", "DESC"]],
       include: [
@@ -137,6 +159,7 @@ class ReferenceService {
         },
       ],
     });
+    return references.map((r) => ensureCountriesArray(r.toJSON()));
   }
 
   async getReferenceById(id, includeAdjacent = false) {
@@ -186,6 +209,7 @@ class ReferenceService {
       : [];
     delete referenceJson.media;
     delete referenceJson.relatedReferences;
+    ensureCountriesArray(referenceJson);
 
     if (includeAdjacent) {
       try {
@@ -244,7 +268,9 @@ class ReferenceService {
       ],
     });
 
-    return reference;
+    if (!reference) return null;
+    const refJson = reference.toJSON();
+    return ensureCountriesArray(refJson);
   }
 
   async updateReference(id, referenceData) {
@@ -271,6 +297,10 @@ class ReferenceService {
 
     // Ne frissítsük a primary key-t (a body-ban jöhet id)
     delete referenceFields.id;
+
+    if (referenceFields.countries !== undefined) {
+      referenceFields.countries = normalizeCountries(referenceFields.countries);
+    }
 
     await reference.update(referenceFields);
 
@@ -384,7 +414,7 @@ class ReferenceService {
           : [];
         delete referenceJson.media;
         delete referenceJson.relatedReferences;
-        return referenceJson;
+        return ensureCountriesArray(referenceJson);
       });
     }
 
@@ -437,7 +467,7 @@ class ReferenceService {
         : [];
       delete referenceJson.media;
       delete referenceJson.relatedReferences;
-      return referenceJson;
+      return ensureCountriesArray(referenceJson);
     });
   }
 }

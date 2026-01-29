@@ -43,6 +43,11 @@ const Reference = sequelize.define("Reference", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  countries: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    comment: "Országkódok vagy nevek tömbje (pl. [\"HU\", \"DE\"])",
+  },
   status: {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
