@@ -35,6 +35,20 @@ class ProductSubcategoryService {
   async getAllProductSubcategories() {
     return await ProductSubcategory.findAll({
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: ProductCategory,
+          as: "category",
+          required: false,
+          include: [
+            {
+              model: ProductCategoryGroup,
+              as: "group",
+              required: false,
+            },
+          ],
+        },
+      ],
     });
   }
 
@@ -178,13 +192,55 @@ class ProductSubcategoryService {
   }
 
   async queryProductSubcategories({ pagination, sort, search, filters }) {
+    const categoryInclude = [
+      {
+        model: ProductCategory,
+        as: "category",
+        required: false,
+        include: [
+          {
+            model: ProductCategoryGroup,
+            as: "group",
+            required: false,
+          },
+        ],
+      },
+    ];
+
     const result = await queryDatabase({
       model: ProductSubcategory,
       pagination,
       sort,
       search,
       filters,
+      include: categoryInclude,
     });
+
+    const orderBy = sort?.column || "createdAt";
+    const isDesc = (sort?.direction || "").toUpperCase() === "DESC";
+
+    result.data = await Promise.all(
+      result.data.map(async (row) => {
+        const plain = row.toJSON ? row.toJSON() : { ...row };
+        try {
+          const adj = await getAdjacentElements({
+            id: row.id,
+            model: ProductSubcategory,
+            orderBy,
+          });
+          let { previousElementId, nextElementId } = adj;
+          if (isDesc) {
+            [previousElementId, nextElementId] = [
+              nextElementId,
+              previousElementId,
+            ];
+          }
+          return { ...plain, previousElementId, nextElementId };
+        } catch {
+          return { ...plain, previousElementId: null, nextElementId: null };
+        }
+      })
+    );
 
     return result;
   }

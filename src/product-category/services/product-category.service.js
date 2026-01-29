@@ -25,6 +25,13 @@ class ProductCategoryService {
   async getAllProductCategories() {
     return await ProductCategory.findAll({
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: ProductCategoryGroup,
+          as: "group",
+          required: false,
+        },
+      ],
     });
   }
 
@@ -134,13 +141,48 @@ class ProductCategoryService {
   }
 
   async queryProductCategories({ pagination, sort, search, filters }) {
+    const groupInclude = [
+      {
+        model: ProductCategoryGroup,
+        as: "group",
+        required: false,
+      },
+    ];
+
     const result = await queryDatabase({
       model: ProductCategory,
       pagination,
       sort,
       search,
       filters,
+      include: groupInclude,
     });
+
+    const orderBy = sort?.column || "createdAt";
+    const isDesc = (sort?.direction || "").toUpperCase() === "DESC";
+
+    result.data = await Promise.all(
+      result.data.map(async (row) => {
+        const plain = row.toJSON ? row.toJSON() : { ...row };
+        try {
+          const adj = await getAdjacentElements({
+            id: row.id,
+            model: ProductCategory,
+            orderBy,
+          });
+          let { previousElementId, nextElementId } = adj;
+          if (isDesc) {
+            [previousElementId, nextElementId] = [
+              nextElementId,
+              previousElementId,
+            ];
+          }
+          return { ...plain, previousElementId, nextElementId };
+        } catch {
+          return { ...plain, previousElementId: null, nextElementId: null };
+        }
+      })
+    );
 
     return result;
   }

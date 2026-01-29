@@ -75,6 +75,25 @@ class ProductService {
           order: [["displayOrder", "ASC"]],
         },
         {
+          model: ProductSubcategory,
+          as: "subcategory",
+          required: false,
+          include: [
+            {
+              model: ProductCategory,
+              as: "category",
+              required: false,
+              include: [
+                {
+                  model: ProductCategoryGroup,
+                  as: "group",
+                  required: false,
+                },
+              ],
+            },
+          ],
+        },
+        {
           model: Reference,
           as: "references",
           required: false,
@@ -349,43 +368,93 @@ class ProductService {
   }
 
   async queryProducts({ pagination, sort, search, filters }) {
+    const productInclude = [
+      {
+        model: ProductGallery,
+        as: "gallery",
+        required: false,
+      },
+      {
+        model: ProductDownloadable,
+        as: "downloadables",
+        required: false,
+      },
+      {
+        model: ProductSubcategory,
+        as: "subcategory",
+        required: false,
+        include: [
+          {
+            model: ProductCategory,
+            as: "category",
+            required: false,
+            include: [
+              {
+                model: ProductCategoryGroup,
+                as: "group",
+                required: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        model: Reference,
+        as: "references",
+        required: false,
+        through: { attributes: [] },
+        attributes: ["id"],
+      },
+      {
+        model: Media,
+        as: "media",
+        required: false,
+        through: { attributes: [] },
+        attributes: ["id"],
+      },
+    ];
+
     const result = await queryDatabase({
       model: Product,
       pagination,
       sort,
       search,
       filters,
-      include: [
-        {
-          model: ProductGallery,
-          as: "gallery",
-          required: false,
-        },
-        {
-          model: ProductDownloadable,
-          as: "downloadables",
-          required: false,
-        },
-        {
-          model: Reference,
-          as: "references",
-          required: false,
-          through: { attributes: [] },
-          attributes: ["id"], // Admin esetén csak az ID-kat adjuk vissza
-        },
-      ],
+      include: productInclude,
     });
 
-    // Admin esetén csak a referenceId-kat adjuk vissza tömbben
+    const orderBy = sort?.column || "createdAt";
+    const isDesc = (sort?.direction || "").toUpperCase() === "DESC";
+
     if (result.data) {
-      result.data = result.data.map((product) => {
-        const productJson = product.toJSON ? product.toJSON() : product;
-        productJson.referenceIds = productJson.references
-          ? productJson.references.map((ref) => ref.id)
-          : [];
-        delete productJson.references;
-        return productJson;
-      });
+      result.data = await Promise.all(
+        result.data.map(async (row) => {
+          const plain = row.toJSON ? row.toJSON() : { ...row };
+          plain.referenceIds = plain.references
+            ? plain.references.map((ref) => ref.id)
+            : [];
+          plain.mediaIds = plain.media ? plain.media.map((m) => m.id) : [];
+          delete plain.references;
+          delete plain.media;
+          try {
+            const adj = await getAdjacentElements({
+              id: row.id,
+              model: Product,
+              orderBy,
+            });
+            let { previousElementId, nextElementId } = adj;
+            if (isDesc) {
+              [previousElementId, nextElementId] = [
+                nextElementId,
+                previousElementId,
+              ];
+            }
+            return { ...plain, previousElementId, nextElementId };
+          } catch {
+            return { ...plain, previousElementId: null, nextElementId: null };
+          }
+        })
+      );
     }
 
     return result;
