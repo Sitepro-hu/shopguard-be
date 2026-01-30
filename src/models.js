@@ -22,6 +22,7 @@ const DownloadableCategory = require("./downloadable-item/models/downloadable-ca
 const InternationalContact = require("./international-contact/models/international-contact.model");
 const Glossary = require("./glossary/models/glossary.model");
 const LegalDoc = require("./legal-doc/models/legal-doc.model");
+const SocialMediaPage = require("./social-media-page/models/social-media-page.model");
 
 User.hasMany(PasswordResetRequest, {
   foreignKey: "userId",

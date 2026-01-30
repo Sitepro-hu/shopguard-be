@@ -12,6 +12,7 @@ const Media = require("../media/models/media.model");
 const Reference = require("../reference/models/reference.model");
 const Glossary = require("../glossary/models/glossary.model");
 const LegalDoc = require("../legal-doc/models/legal-doc.model");
+const SocialMediaPage = require("../social-media-page/models/social-media-page.model");
 const FAQ = require("../faq/models/faq.model");
 const FaqCategory = require("../faq/models/faq-category.model");
 const DownloadableItem = require("../downloadable-item/models/downloadable-item.model");
@@ -154,6 +155,14 @@ const adminSearchConfig = [
     type: "legalDoc",
     titleField: "title",
     searchFields: ["title", "slug", "content"],
+    where: { status: { [Op.ne]: "DELETED" } },
+  },
+  // Social media page
+  {
+    model: SocialMediaPage,
+    type: "socialMediaPage",
+    titleField: "name",
+    searchFields: ["name", "type", "url"],
     where: { status: { [Op.ne]: "DELETED" } },
   },
   // International contact

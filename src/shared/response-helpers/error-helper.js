@@ -280,6 +280,19 @@ const LegalDocErrors = {
 };
 
 /**
+ * Social media page hibák
+ */
+const SocialMediaPageErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.SOCIAL_MEDIA_PAGE.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.SOCIAL_MEDIA_PAGE.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.SOCIAL_MEDIA_PAGE.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.SOCIAL_MEDIA_PAGE.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -399,6 +412,7 @@ module.exports = {
   InternationalContactErrors,
   GlossaryErrors,
   LegalDocErrors,
+  SocialMediaPageErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

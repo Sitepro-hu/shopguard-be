@@ -130,6 +130,13 @@
       "DELETE_FAILED": "Sikertelen jogi dokumentum törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
+    "SOCIAL_MEDIA_PAGE": {
+      "NOT_FOUND": "Közösségi oldal nem található!",
+      "CREATE_FAILED": "Sikertelen közösségi oldal létrehozás!",
+      "UPDATE_FAILED": "Sikertelen közösségi oldal frissítés!",
+      "DELETE_FAILED": "Sikertelen közösségi oldal törlés!",
+      "QUERY_FAILED": "Sikertelen lekérdezés!"
+    },
     "CONTACT": {
       "NOT_FOUND": "Kapcsolatfelvétel nem található!",
       "CREATE_FAILED": "Sikertelen kapcsolatfelvétel!",
@@ -287,6 +294,12 @@
       "CREATE_SUCCESS": "👍 Sikeres jogi dokumentum létrehozás!",
       "UPDATE_SUCCESS": "👍 Sikeres jogi dokumentum frissítés!",
       "DELETE_SUCCESS": "👍 Sikeres jogi dokumentum törlés!",
+      "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
+    },
+    "SOCIAL_MEDIA_PAGE": {
+      "CREATE_SUCCESS": "👍 Sikeres közösségi oldal létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres közösségi oldal frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres közösségi oldal törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {

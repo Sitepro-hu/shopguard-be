@@ -21,6 +21,7 @@ const downloadableCategoryRoutes = require("./downloadable-item/routes/downloada
 const internationalContactRoutes = require("./international-contact/routes/international-contact.routes");
 const glossaryRoutes = require("./glossary/routes/glossary.routes");
 const legalDocRoutes = require("./legal-doc/routes/legal-doc.routes");
+const socialMediaPageRoutes = require("./social-media-page/routes/social-media-page.routes");
 const adminSearchRoutes = require("./admin-search/routes/admin-search.routes");
 const router = express.Router();
 
@@ -46,6 +47,7 @@ router.use("/api/downloadable-category", downloadableCategoryRoutes);
 router.use("/api/international-contact", internationalContactRoutes);
 router.use("/api/glossary", glossaryRoutes);
 router.use("/api/legal-doc", legalDocRoutes);
+router.use("/api/social-media-page", socialMediaPageRoutes);
 router.use("/api/search", adminSearchRoutes);
 
 
