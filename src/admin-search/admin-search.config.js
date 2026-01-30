@@ -85,7 +85,7 @@ const adminSearchConfig = [
     model: ProductSubcategory,
     type: "productSubcategory",
     titleField: "title",
-    searchFields: ["title", "description"],
+    searchFields: ["title"],
     where: { status: { [Op.ne]: "DELETED" } },
   },
   {
