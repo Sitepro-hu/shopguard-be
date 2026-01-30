@@ -267,6 +267,19 @@ const GlossaryErrors = {
 };
 
 /**
+ * Legal doc hibák
+ */
+const LegalDocErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.LEGAL_DOC.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.LEGAL_DOC.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.LEGAL_DOC.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.LEGAL_DOC.DELETE_FAILED, details),
+};
+
+/**
  * Email verifikáció hibák
  */
 const EmailVerificationErrors = {
@@ -385,6 +398,7 @@ module.exports = {
   DownloadableCategoryErrors,
   InternationalContactErrors,
   GlossaryErrors,
+  LegalDocErrors,
   EmailVerificationErrors,
   PasswordResetErrors,
   ContactErrors,

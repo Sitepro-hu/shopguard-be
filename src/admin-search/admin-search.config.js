@@ -11,6 +11,7 @@ const Partner = require("../partner/models/partner.model");
 const Media = require("../media/models/media.model");
 const Reference = require("../reference/models/reference.model");
 const Glossary = require("../glossary/models/glossary.model");
+const LegalDoc = require("../legal-doc/models/legal-doc.model");
 const FAQ = require("../faq/models/faq.model");
 const FaqCategory = require("../faq/models/faq-category.model");
 const DownloadableItem = require("../downloadable-item/models/downloadable-item.model");
@@ -145,6 +146,14 @@ const adminSearchConfig = [
     type: "glossary",
     titleField: "name",
     searchFields: ["name", "description"],
+    where: { status: { [Op.ne]: "DELETED" } },
+  },
+  // Legal doc
+  {
+    model: LegalDoc,
+    type: "legalDoc",
+    titleField: "title",
+    searchFields: ["title", "slug", "content"],
     where: { status: { [Op.ne]: "DELETED" } },
   },
   // International contact

@@ -123,11 +123,11 @@
       "DELETE_FAILED": "Sikertelen szótár törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
-    "GLOSSARY": {
-      "NOT_FOUND": "Szótár nem található!",
-      "CREATE_FAILED": "Sikertelen szótár létrehozás!",
-      "UPDATE_FAILED": "Sikertelen szótár frissítés!",
-      "DELETE_FAILED": "Sikertelen szótár törlés!",
+    "LEGAL_DOC": {
+      "NOT_FOUND": "Jogi dokumentum nem található!",
+      "CREATE_FAILED": "Sikertelen jogi dokumentum létrehozás!",
+      "UPDATE_FAILED": "Sikertelen jogi dokumentum frissítés!",
+      "DELETE_FAILED": "Sikertelen jogi dokumentum törlés!",
       "QUERY_FAILED": "Sikertelen lekérdezés!"
     },
     "CONTACT": {
@@ -283,10 +283,10 @@
       "DELETE_SUCCESS": "👍 Sikeres szótár törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
-    "GLOSSARY": {
-      "CREATE_SUCCESS": "👍 Sikeres szótár létrehozás!",
-      "UPDATE_SUCCESS": "👍 Sikeres szótár frissítés!",
-      "DELETE_SUCCESS": "👍 Sikeres szótár törlés!",
+    "LEGAL_DOC": {
+      "CREATE_SUCCESS": "👍 Sikeres jogi dokumentum létrehozás!",
+      "UPDATE_SUCCESS": "👍 Sikeres jogi dokumentum frissítés!",
+      "DELETE_SUCCESS": "👍 Sikeres jogi dokumentum törlés!",
       "QUERY_SUCCESS": "👍 Sikeres lekérdezés!"
     },
     "CONTACT": {
