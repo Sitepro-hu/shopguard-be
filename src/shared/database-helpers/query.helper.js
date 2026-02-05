@@ -56,25 +56,29 @@ async function queryDatabase({
   const page = Number(pagination?.page) || 1;
   const offset = (page - 1) * limit;
 
-  let sortField = sort?.column || "createdAt";
-  const direction =
-    (sort?.direction || "DESC").toUpperCase() === "ASC" ? "ASC" : "DESC";
+  const rawAttrs = model.rawAttributes || {};
+  const normalizeDir = (d) => ((d || "DESC").toUpperCase() === "ASC" ? "ASC" : "DESC");
 
-  // Ha nem létezik az adott mező, fallback
-  if (!model.rawAttributes?.[sortField]) {
-    sortField = "createdAt";
-  }
-
-  // Custom sort mezők kezelése
   let order;
   if (sort?.customSort) {
-    // Ha van custom sort definiálva, azt használjuk
     order = sort.customSort;
-  } else {
-    // Egyébként a normál mező alapú rendezés
+  } else if (Array.isArray(sort) && sort.length > 0) {
+    // Több rendezési szint: [{ column: "isPinned", direction: "desc" }, { column: "createdAt", direction: "desc" }]
+    order = sort
+      .filter((s) => s && s.column && rawAttrs[s.column])
+      .map((s) => [s.column, normalizeDir(s.direction)]);
+    if (order.length === 0) order = [["createdAt", "DESC"]];
+    order.push(["id", "DESC"]);
+  } else if (sort?.column && rawAttrs[sort.column]) {
     order = [
-      [sortField, direction],
-      ["id", "DESC"], // stabil másodlagos rendezés
+      [sort.column, normalizeDir(sort.direction)],
+      ["id", "DESC"],
+    ];
+  } else {
+    const sortField = sort?.column && rawAttrs[sort.column] ? sort.column : "createdAt";
+    order = [
+      [sortField, normalizeDir(sort?.direction)],
+      ["id", "DESC"],
     ];
   }
 

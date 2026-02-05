@@ -19,6 +19,7 @@ exports.createContact = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       telephone: req.body.telephone,
+      country: req.body.country,
       message: req.body.message,
       privacyPolicy: req.body.privacyPolicy,
       status: "UNREAD",

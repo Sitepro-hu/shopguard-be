@@ -58,7 +58,7 @@ class MediaService {
   async getPublishedMedia() {
     return await Media.findAll({
       where: { status: "PUBLISHED" },
-      order: [["createdAt", "DESC"]],
+      order: [["isPinned", "DESC"], ["createdAt", "DESC"]],
       include: [
         {
           model: Media,

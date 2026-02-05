@@ -16,6 +16,10 @@ const Contact = sequelize.define("Contact", {
     allowNull: false,
   },
   telephone: DataTypes.STRING,
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   message: DataTypes.TEXT,
   privacyPolicy: DataTypes.BOOLEAN,
   status: DataTypes.ENUM(["UNREAD", "READ", "DELETED"]),

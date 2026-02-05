@@ -35,6 +35,11 @@ const Media = sequelize.define("Media", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  isPinned: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   status: {
     type: DataTypes.ENUM(["PUBLISHED", "DRAFT", "DELETED"]),
     defaultValue: "DRAFT",
