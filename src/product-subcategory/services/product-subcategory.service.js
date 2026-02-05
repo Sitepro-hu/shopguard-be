@@ -9,23 +9,9 @@ const {
   ProductSubcategoryErrors,
 } = require("../../shared/response-helpers/error-helper");
 const getAdjacentElements = require("../../shared/database-helpers/adjacent-element.helper");
-const {
-  customSlugify,
-} = require("../../shared/database-helpers/slugify-helper");
 
 class ProductSubcategoryService {
   async createProductSubcategory(productSubcategoryData) {
-    // Ha nincs slug vagy üres, generáljuk a title-ből
-    if (
-      !productSubcategoryData.slug ||
-      productSubcategoryData.slug.trim() === ""
-    ) {
-      productSubcategoryData.slug = await customSlugify(
-        ProductSubcategory,
-        productSubcategoryData.title,
-        null
-      );
-    }
     const productSubcategory = await ProductSubcategory.create(
       productSubcategoryData
     );
@@ -97,59 +83,6 @@ class ProductSubcategoryService {
     return productSubcategory;
   }
 
-  async getProductSubcategoryBySlug(slug) {
-    const productSubcategory = await ProductSubcategory.findOne({
-      where: {
-        slug,
-        status: "PUBLISHED",
-      },
-      include: [
-        {
-          model: ProductCategory,
-          as: "category",
-          required: false,
-          include: [
-            {
-              model: ProductCategoryGroup,
-              as: "group",
-              required: false,
-            },
-          ],
-        },
-        {
-          model: Product,
-          as: "products",
-          required: false,
-          where: { status: "PUBLISHED" },
-          order: [["displayOrder", "ASC"]],
-          include: [
-            {
-              model: ProductGallery,
-              as: "gallery",
-              required: false,
-              order: [["displayOrder", "ASC"]],
-            },
-            {
-              model: ProductDownloadable,
-              as: "downloadables",
-              required: false,
-              order: [["displayOrder", "ASC"]],
-            },
-            {
-              model: require("../../media/models/media.model"),
-              as: "media",
-              required: false,
-              where: { status: "PUBLISHED" },
-              through: { attributes: [] },
-            },
-          ],
-        },
-      ],
-    });
-
-    return productSubcategory;
-  }
-
   async updateProductSubcategory(id, productSubcategoryData) {
     const productSubcategory = await ProductSubcategory.findOne({
       where: { id },
@@ -157,19 +90,6 @@ class ProductSubcategoryService {
 
     if (!productSubcategory) {
       throw ProductSubcategoryErrors.notFound();
-    }
-
-    // Ha nincs slug vagy üres, és változott a title, generáljuk a title-ből
-    if (
-      (!productSubcategoryData.slug ||
-        productSubcategoryData.slug.trim() === "") &&
-      productSubcategoryData.title
-    ) {
-      productSubcategoryData.slug = await customSlugify(
-        ProductSubcategory,
-        productSubcategoryData.title,
-        id
-      );
     }
 
     await productSubcategory.update(productSubcategoryData);

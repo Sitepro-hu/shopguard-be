@@ -6,12 +6,6 @@ const {
   checkUserStatus,
 } = require("../../user/middlewares/auth.middleware");
 
-// Public routes
-router.get(
-  "/slug/:slug",
-  productSubcategoryController.getProductSubcategoryBySlug
-);
-
 // Protected routes (admin only)
 router.post(
   "/admin",

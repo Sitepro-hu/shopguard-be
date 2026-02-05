@@ -12,14 +12,6 @@ const ProductSubcategory = sequelize.define("ProductSubcategory", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  slug: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  imgSrc: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   displayOrder: {
     type: DataTypes.INTEGER,
     allowNull: false,

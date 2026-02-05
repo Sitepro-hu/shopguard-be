@@ -7,18 +7,9 @@ const {
   ProductCategoryGroupErrors,
 } = require("../../shared/response-helpers/error-helper");
 const getAdjacentElements = require("../../shared/database-helpers/adjacent-element.helper");
-const { customSlugify } = require("../../shared/database-helpers/slugify-helper");
 
 class ProductCategoryGroupService {
   async createProductCategoryGroup(productCategoryGroupData) {
-    // Ha nincs slug vagy üres, generáljuk a title-ből
-    if (!productCategoryGroupData.slug || productCategoryGroupData.slug.trim() === "") {
-      productCategoryGroupData.slug = await customSlugify(
-        ProductCategoryGroup,
-        productCategoryGroupData.title,
-        null
-      );
-    }
     const productCategoryGroup = await ProductCategoryGroup.create(productCategoryGroupData);
     return await this.getProductCategoryGroupById(productCategoryGroup.id);
   }
@@ -120,18 +111,6 @@ class ProductCategoryGroupService {
 
     if (!productCategoryGroup) {
       throw ProductCategoryGroupErrors.notFound();
-    }
-
-    // Ha nincs slug vagy üres, és változott a title, generáljuk a title-ből
-    if (
-      (!productCategoryGroupData.slug || productCategoryGroupData.slug.trim() === "") &&
-      productCategoryGroupData.title
-    ) {
-      productCategoryGroupData.slug = await customSlugify(
-        ProductCategoryGroup,
-        productCategoryGroupData.title,
-        id
-      );
     }
 
     await productCategoryGroup.update(productCategoryGroupData);

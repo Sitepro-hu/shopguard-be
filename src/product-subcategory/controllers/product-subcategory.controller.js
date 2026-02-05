@@ -40,24 +40,6 @@ class ProductSubcategoryController {
     }
   }
 
-  async getProductSubcategoryBySlug(req, res) {
-    try {
-      const { slug } = req.params;
-      const productSubcategory =
-        await productSubcategoryService.getProductSubcategoryBySlug(slug);
-      if (!productSubcategory) {
-        throw ProductSubcategoryErrors.notFound();
-      }
-      handleSuccess(
-        res,
-        SUCCESS_CODES.PRODUCT_SUBCATEGORY.QUERY_SUCCESS,
-        productSubcategory
-      );
-    } catch (error) {
-      handleError(res, error, ERROR_CODES.PRODUCT_SUBCATEGORY.QUERY_FAILED);
-    }
-  }
-
   async getProductSubcategoryById(req, res) {
     try {
       const productSubcategory =
