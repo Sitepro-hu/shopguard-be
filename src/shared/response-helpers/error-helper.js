@@ -176,6 +176,19 @@ const ProductErrors = {
 };
 
 /**
+ * ProductLink hibák
+ */
+const ProductLinkErrors = {
+  notFound: () => createStructuredError(ERROR_CODES.PRODUCT_LINK.NOT_FOUND),
+  createFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_LINK.CREATE_FAILED, details),
+  updateFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_LINK.UPDATE_FAILED, details),
+  deleteFailed: (details) =>
+    createStructuredError(ERROR_CODES.PRODUCT_LINK.DELETE_FAILED, details),
+};
+
+/**
  * Reference hibák
  */
 const ReferenceErrors = {
@@ -404,6 +417,7 @@ module.exports = {
   ProductCategoryErrors,
   ProductSubcategoryErrors,
   ProductErrors,
+  ProductLinkErrors,
   ReferenceErrors,
   MediaErrors,
   PartnerErrors,

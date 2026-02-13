@@ -13,6 +13,7 @@ const productCategoryGroupRoutes = require("./product-category-group/routes/prod
 const productCategoryRoutes = require("./product-category/routes/product-category.routes");
 const productSubcategoryRoutes = require("./product-subcategory/routes/product-subcategory.routes");
 const productRoutes = require("./product/routes/product.routes");
+const productLinkRoutes = require("./product-link/routes/product-link.routes");
 const referenceRoutes = require("./reference/routes/reference.routes");
 const mediaRoutes = require("./media/routes/media.routes");
 const partnerRoutes = require("./partner/routes/partner.routes");
@@ -39,6 +40,7 @@ router.use("/api/product-category-group", productCategoryGroupRoutes);
 router.use("/api/product-category", productCategoryRoutes);
 router.use("/api/product-subcategory", productSubcategoryRoutes);
 router.use("/api/product", productRoutes);
+router.use("/api/product-link", productLinkRoutes);
 router.use("/api/reference", referenceRoutes);
 router.use("/api/media", mediaRoutes);
 router.use("/api/partner", partnerRoutes);

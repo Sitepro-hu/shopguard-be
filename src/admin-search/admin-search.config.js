@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const User = require("../user/models/user.model");
 const Contact = require("../contact/models/contact.model");
 const Product = require("../product/models/product.model");
+const ProductLink = require("../product-link/models/product-link.model");
 const ProductCategoryGroup = require("../product-category-group/models/product-category-group.model");
 const ProductCategory = require("../product-category/models/product-category.model");
 const ProductSubcategory = require("../product-subcategory/models/product-subcategory.model");
@@ -63,6 +64,14 @@ const adminSearchConfig = [
     type: "product",
     titleField: "title",
     searchFields: ["title", "shortDescription", "longDescription"],
+    where: { status: { [Op.ne]: "DELETED" } },
+  },
+  // ProductLink
+  {
+    model: ProductLink,
+    type: "productLink",
+    titleField: "title",
+    searchFields: ["title", "redirectUrl"],
     where: { status: { [Op.ne]: "DELETED" } },
   },
   {

@@ -2,6 +2,7 @@ const ProductCategoryGroup = require("../models/product-category-group.model");
 const ProductCategory = require("../../product-category/models/product-category.model");
 const ProductSubcategory = require("../../product-subcategory/models/product-subcategory.model");
 const Product = require("../../product/models/product.model");
+const ProductLink = require("../../product-link/models/product-link.model");
 const queryDatabase = require("../../shared/database-helpers/query.helper");
 const {
   ProductCategoryGroupErrors,
@@ -38,10 +39,26 @@ class ProductCategoryGroupService {
               required: false,
               where: { status: "PUBLISHED" },
               order: [["displayOrder", "ASC"]],
+              include: [
+                {
+                  model: ProductLink,
+                  as: "productLinks",
+                  required: false,
+                  where: { status: "PUBLISHED" },
+                  order: [["displayOrder", "ASC"]],
+                },
+              ],
             },
             {
               model: Product,
               as: "directProducts",
+              required: false,
+              where: { status: "PUBLISHED", isDirectToCategory: true },
+              order: [["displayOrder", "ASC"]],
+            },
+            {
+              model: ProductLink,
+              as: "directProductLinks",
               required: false,
               where: { status: "PUBLISHED", isDirectToCategory: true },
               order: [["displayOrder", "ASC"]],
@@ -51,6 +68,13 @@ class ProductCategoryGroupService {
         {
           model: Product,
           as: "directProducts",
+          required: false,
+          where: { status: "PUBLISHED", isDirectToGroup: true },
+          order: [["displayOrder", "ASC"]],
+        },
+        {
+          model: ProductLink,
+          as: "directProductLinks",
           required: false,
           where: { status: "PUBLISHED", isDirectToGroup: true },
           order: [["displayOrder", "ASC"]],

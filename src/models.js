@@ -10,6 +10,7 @@ const ProductCategoryGroup = require("./product-category-group/models/product-ca
 const ProductCategory = require("./product-category/models/product-category.model");
 const ProductSubcategory = require("./product-subcategory/models/product-subcategory.model");
 const Product = require("./product/models/product.model");
+const ProductLink = require("./product-link/models/product-link.model");
 const ProductGallery = require("./product/models/product-gallery.model");
 const ProductDownloadable = require("./product/models/product-downloadable.model");
 const Reference = require("./reference/models/reference.model");
@@ -104,6 +105,42 @@ Product.belongsTo(ProductCategory, {
 ProductCategory.hasMany(Product, {
   foreignKey: "productCategoryId",
   as: "directProducts",
+  onDelete: "CASCADE",
+});
+
+// ProductSubcategory - ProductLink associations
+ProductLink.belongsTo(ProductSubcategory, {
+  as: "subcategory",
+  foreignKey: "productSubcategoryId",
+  onDelete: "CASCADE",
+});
+ProductSubcategory.hasMany(ProductLink, {
+  foreignKey: "productSubcategoryId",
+  as: "productLinks",
+  onDelete: "CASCADE",
+});
+
+// ProductLink - ProductCategoryGroup (direct) associations
+ProductLink.belongsTo(ProductCategoryGroup, {
+  as: "directGroup",
+  foreignKey: "productCategoryGroupId",
+  onDelete: "CASCADE",
+});
+ProductCategoryGroup.hasMany(ProductLink, {
+  foreignKey: "productCategoryGroupId",
+  as: "directProductLinks",
+  onDelete: "CASCADE",
+});
+
+// ProductLink - ProductCategory (direct) associations
+ProductLink.belongsTo(ProductCategory, {
+  as: "directCategory",
+  foreignKey: "productCategoryId",
+  onDelete: "CASCADE",
+});
+ProductCategory.hasMany(ProductLink, {
+  foreignKey: "productCategoryId",
+  as: "directProductLinks",
   onDelete: "CASCADE",
 });
 
@@ -242,6 +279,7 @@ module.exports = {
   ProductCategory,
   ProductSubcategory,
   Product,
+  ProductLink,
   ProductGallery,
   ProductDownloadable,
   Reference,
