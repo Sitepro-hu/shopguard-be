@@ -26,7 +26,8 @@ exports.createPasswordResetRequest = async (req, res) => {
       user.id
     );
 
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const baseUrl =
+      process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
     await sendingPasswordResetEmail(
       user,
       `${baseUrl}/api/profile/password-reset/${rawToken}`
@@ -40,7 +41,8 @@ exports.createPasswordResetRequest = async (req, res) => {
 
 exports.passwordResetPage = async (req, res) => {
   try {
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const baseUrl =
+      process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
     const passwordResetSubmitUrl = `${baseUrl}/api/profile/password-reset-submit`;
 
     res.render("password-reset", {

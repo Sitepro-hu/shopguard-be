@@ -51,7 +51,8 @@ exports.createUser = async (req, res) => {
       const verificationToken = userService.generateEmailVerificationToken(
         user.email,
       );
-      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const baseUrl =
+        process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
       const verificationUrl = `${baseUrl}/api/auth/verify-email/${verificationToken}`;
       await sendingEmailVerification(user, verificationUrl);
     } else {
@@ -60,7 +61,8 @@ exports.createUser = async (req, res) => {
       const rawToken = await passwordResetRequestService.createRequestForUser(
         user.id,
       );
-      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const baseUrl =
+        process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
       const setPasswordUrl = `${baseUrl}/api/profile/password-reset/${rawToken}`;
       await sendingSetPasswordEmail(user, setPasswordUrl);
     }

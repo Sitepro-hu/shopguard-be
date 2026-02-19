@@ -93,7 +93,8 @@ exports.userRegistration = async (req, res) => {
     const verificationToken = userService.generateEmailVerificationToken(
       user.email
     );
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const baseUrl =
+      process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
     const verificationUrl = `${baseUrl}/api/auth/verify-email/${verificationToken}`;
 
     await sendingEmailVerification(user, verificationUrl);
