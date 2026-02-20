@@ -17,12 +17,14 @@ async function sendingEmail({
 }
 
 function createTransport() {
+  const port = parseInt(process.env.EMAIL_PORT, 10) || 587;
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: false,
+    port,
+    secure: port === 465,
+    requireTLS: port === 587,
     auth: {
-      user: process.env.EMAIL_FROM,
+      user: process.env.EMAIL_USER || process.env.EMAIL_FROM,
       pass: process.env.EMAIL_PSW,
     },
     tls: {

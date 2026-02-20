@@ -18,7 +18,6 @@ exports.verifyEmail = async (req, res) => {
         message:
           "A verifikációs link lejárt. Kérjük, kérj új verifikációs emailt.",
         supportEmail: process.env.CONTACT_INFO_EMAIL,
-        supportTelephone: process.env.CONTACT_INFO_TELEPHONE,
         supportName: process.env.CONTACT_INFO_NAME,
       });
     }
@@ -30,7 +29,6 @@ exports.verifyEmail = async (req, res) => {
         title: "Felhasználó nem található!",
         message: "A felhasználó nem található a rendszerben.",
         supportEmail: process.env.CONTACT_INFO_EMAIL,
-        supportTelephone: process.env.CONTACT_INFO_TELEPHONE,
         supportName: process.env.CONTACT_INFO_NAME,
       });
     }
@@ -55,7 +53,6 @@ exports.verifyEmail = async (req, res) => {
       title: "Sikertelen email verifikáció!",
       message: "Hiba történt az email verifikáció során. Kérjük, próbáld újra.",
       supportEmail: process.env.CONTACT_INFO_EMAIL,
-      supportTelephone: process.env.CONTACT_INFO_TELEPHONE,
       supportName: process.env.CONTACT_INFO_NAME,
     });
   }
