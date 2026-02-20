@@ -17,6 +17,12 @@ async function sendingEmail({
 }
 
 function createTransport() {
+  // Ha megadva az egész URL (pl. szolgáltatótól), azt használjuk – a felhasználónévben @ → %40
+  const connectionUrl = process.env.EMAIL_URL;
+  if (connectionUrl) {
+    return nodemailer.createTransport(connectionUrl);
+  }
+
   const port = parseInt(process.env.EMAIL_PORT, 10) || 587;
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
