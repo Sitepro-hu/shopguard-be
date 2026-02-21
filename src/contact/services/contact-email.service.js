@@ -11,6 +11,7 @@ const sendingContactEmail = async (contact) => {
   html += `<p>Name: ${contact.name}<br>`;
   html += `Email: ${contact.email}<br>`;
   html += `Telephone: ${contact.telephone}<br>`;
+  html += `Country: ${contact.country}<br>`;
   html += `Message: ${contact.message}</p>`;
   html += createEmailFooter();
 
